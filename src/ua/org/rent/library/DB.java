@@ -11,14 +11,12 @@ import ua.org.rent.R;
 import ua.org.rent.RentAppState;
 
 public class DB extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "patient.sqlite";
+    public static final String DATABASE_NAME = "rentapp.sqlite";
 
     public static final String TABLE_IMAGES			= "image_cache";
-    public static final String TABLE_MEAL_CATEGORY	= "meal_category";
-    public static final String TABLE_MEAL				= "meal";
-    public static final String TABLE_EVENT_MEAL_TMP	= "event_Meal_Tmp";
 
-    private static final int DATABASE_VERSION = 12;
+
+    private static final int DATABASE_VERSION = 1;
     private volatile static DB sInstance;
     private final Context mContext;
 
