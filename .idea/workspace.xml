@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="176b8973-cbbe-404e-af81-221574281fc4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ua/org/rent/library/DB.java" afterPath="$PROJECT_DIR$/src/ua/org/rent/library/DB.java" />
-    </list>
+    <list default="true" id="176b8973-cbbe-404e-af81-221574281fc4" name="Default" comment="" />
     <ignored path="rent-app-android.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376723006647" ignored="false" />
     <file path="/RentAppState.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376723157056" ignored="false" />
     <file path="/DB.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376723560644" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376723621788" ignored="false" />
+    <file path="$USER_HOME$/Documents/workspace/android_patient/src/ru/normasugar/patient/io/RequestDiary.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376910579646" ignored="false" />
+    <file path="/RequestDiary.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376910578732" ignored="false" />
+    <file path="$USER_HOME$/Documents/workspace/android_patient/src/ru/normasugar/patient/ui/home/CalculatorFrame.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376911049155" ignored="false" />
+    <file path="$USER_HOME$/Documents/workspace/android_patient/src/ru/normasugar/patient/ui/medicalconsultation/MessageHelper.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1376911710419" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
