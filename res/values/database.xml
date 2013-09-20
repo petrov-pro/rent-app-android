@@ -2,299 +2,90 @@
 <resources>
     <string-array name="DDL">
         <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"type" INTEGER NOT NULL,
-	"timestamp" INTEGER NOT NULL,
-	"is_delivered" INTEGER,
-	"is_used" INTEGER,
-	"comment" TEXT
-); 
-]]></item>
-
-
-
-
-
-        <item><![CDATA[
-CREATE TRIGGER IF NOT EXISTS [delete_delivered_events]
-    BEFORE DELETE
-    ON [event]
-    FOR EACH ROW
-    BEGIN
-    DELETE FROM event_AdditionalProduct WHERE event_AdditionalProduct.event_id = old._id;
-    DELETE FROM event_BloodGlucose WHERE event_BloodGlucose.event_id = old._id;
-    DELETE FROM event_Meal WHERE event_Meal.event_id = old._id;
-    DELETE FROM event_CalculatedInsulin WHERE event_CalculatedInsulin.event_id = old._id;
-    DELETE FROM event_PhysicalExertion WHERE event_PhysicalExertion.event_id = old._id;
-    DELETE FROM event_Bolus WHERE event_Bolus.event_id = old._id;
-    END
-]]></item>
-
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_ProlongedSchedule" (
+CREATE TABLE IF NOT EXISTS "cities" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-       "time"				CHAR(5),
-       "time_int"           INTEGER,
-       "doze"         		FLOAT
+       "title"				CHAR(50) NOT NULL DEFAULT 'xxx',
+       "latitude"           DECIMAL(10,5) NOT NULL DEFAULT 0
+       "longitude"          DECIMAL(10,5) NOT NULL DEFAULT 0,
+       "radius"         	DECIMAL(10,5) NOT NULL DEFAULT 0,
+       "description"        TEXT
        );
 ]]></item>
 
 
         <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "scheme_BasalInsulin" (
+CREATE TABLE IF NOT EXISTS "districts" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-       "interval_num"       INTEGER,
-       "val"         		FLOAT
+       "city_id"         	INTEGER NOT NULL DEFAULT 0,
+       "title"				CHAR(50) NOT NULL DEFAULT 'xxx',
+       "is_center"          BOOLEAN NOT NULL DEFAULT 0,
+       "description"        TEXT
        );
 ]]></item>
 
         <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_BasalInsulin" (
+CREATE TABLE IF NOT EXISTS "features_list" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-       "event_id"			INTEGER,       
-       "type"				INTEGER,
-       "interval_num"       INTEGER,
-       "val"         		FLOAT
+       "title"				CHAR(50) NOT NULL DEFAULT 'удобства',
+       "ico"				CHAR(50) NOT NULL DEFAULT 'default_ico'
        );
 ]]></item>
 
         <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_AdditionalProduct" (
-       "_id"                INTEGER PRIMARY KEY NOT NULL,
-       "event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-       "barcode"            TEXT NOT NULL,
-       "file_title         TEXT NOT NULL,
-       "file_descr"  TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS "features_apartments" (
+       "_id"                        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "apartment_id"			    INTEGER NOT NULL DEFAULT 0,
+       "feature_id"				    INTEGER NOT NULL DEFAULT 0
        );
 ]]></item>
 
 
         <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_TempBasalInsulin" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-	"type" INTEGER,
-	"val" FLOAT,
-	"length" INTEGER,
-	"mtype" INTEGER
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_ProlongedInsulin" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-	"type" INTEGER,
-	"val" FLOAT
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_BloodGlucose" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-	"type" INTEGER,
-	"val" FLOAT
-); 
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_Meal" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-	"fid" LONG,
-	"val" LONG,
-	"z_k" INT,
-	"mf_k" FLOAT
-	
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_Meal_Tmp" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"fid" LONG,
-	"val" LONG,
-	"z_k" INT,
-	"mf_k" FLOAT
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_CalculatedInsulin" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-	"fid" FLOAT,
-	"val" INTEGER,
-	"he" INTEGER
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_PhysicalExertion" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-	"type" INTEGER,
-	"dur" INTEGER,
-	"rate" INTEGER
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "conversations" (
-    "_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "doctor_unic" INTEGER,
-    "doctor_id" INTEGER,
-    "log_id" INTEGER,
-    "remaining_time" INTEGER,
-    "is_open" INTEGER,
-    "is_read" INTEGER,
-    "unread_msgs" INTEGER
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "messages" (
-    "_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "conversation_id" INTEGER CONSTRAINT "conversations" REFERENCES "conversations"("_id") ON DELETE CASCADE,
-    "timestamp" INTEGER NOT NULL,
-    "mid" INTEGER,
-    "body" TEXT ,
-    "type" INTEGER ,
-    "status" INTEGER 
-); 
-]]></item>
-
-        <item><![CDATA[
-CREATE TRIGGER IF NOT EXISTS [delete_messages]
-    BEFORE DELETE
-    ON [conversations]
-    FOR EACH ROW
-    BEGIN
-    DELETE FROM messages WHERE messages.conversation_id = old._id;
-    END
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "doctors" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"doc_id" INTEGER NOT NULL,
-	"doc_unic" INTEGER,
-	"doc_name" TEXT NOT NULL,
-	"doc_mid_name" TEXT,
-	"doc_surname" TEXT,
-	"doc_photo_url" TEXT,
-	"doc_pediatrician" INTEGER
-); 
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "image_cache" (
-	"url" TEXT NOT NULL PRIMARY KEY, 
-	"date_cache" TEXT NOT NULL DEFAULT (CURRENT_DATE), 
-	"image" BLOB NOT NULL
-);
-]]></item>
-
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "hypo_Event_List" (
-    "_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "server_id" INTEGER  INTEGER NOT NULL,
-    "title" TEXT
-);
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "hypo_Reduction_Products" (
-	"_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"server_id" INTEGER NOT NULL,
-	"title" TEXT,
-	"img_url" TEXT
-);
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_Hypoglycaemia" (
-    "_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-    "hypo_event_id" INTEGER NOT NULL CONSTRAINT "hypo_Event_List" REFERENCES "hypo_Event_List"("server_id"),
-    "reduction_product_id" INTEGER NOT NULL CONSTRAINT "hypo_Reduction_Products" REFERENCES "hypo_Reduction_Products"("server_id"),
-     "comments" TEXT
-);
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "event_Bolus" (
-    "_id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "event_id" INTEGER NOT NULL CONSTRAINT "event" REFERENCES "event"("_id") ON DELETE CASCADE,
-    "calc_sf" REAL,
-    "calc_tgb_low" REAL,
-    "calc_tgb_hi" REAL,
-    "calc_value" REAL,
-    "calc_used" INTEGER,
-    "calc_sugar" REAL,
-    "calc_food" REAL,
-    "calc_phys_ex" REAL,
-    "calc_activity" INTEGER,
-    "calc_activity_rate" INTEGER,
-    "calc_active_insulin" REAL,
-    "calc_dose_sugar" REAL,
-    "calc_dose_food" REAL,
-    "injected_value" REAL,
-    "dtype" INTEGER
-    
-   
-);
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "meal_category" (
-	"_id"		INTEGER NOT NULL DEFAULT (0),
-	"subcategory_id"	INTEGER NOT NULL DEFAULT (0),
-	"name"				TEXT NOT NULL,
-	"icon_url"			TEXT,
-	"weight"			INTEGER NOT NULL DEFAULT (0)
-);
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "meal" (
-    "_id"           INTEGER PRIMARY KEY NOT NULL,
-    "subcategory_id" INTEGER NOT NULL,
-    "name"           TEXT NOT NULL,
-    "name_upper"     TEXT,
-    "keywords"        TEXT,
-    "keywords_upper"  TEXT,
-    "portion"        TEXT,
-    "brand"          TEXT,
-    "barcode"        TEXT,
-    "portion_weight" FLOAT,
-    "calories"       FLOAT,
-    "proteins"       FLOAT,
-    "fats"           FLOAT,
-    "carbohydrates"  FLOAT,
-    "glycemic_index" FLOAT,
-    "d2res"          INTEGER,
-    "favorite"       INTEGER,
-    "s"              INTEGER,
-    "unit"           INTEGER,
-    "icon_url"       TEXT,
-    "image_url"      TEXT,
-    FOREIGN KEY ("subcategory_id") REFERENCES "meal_category" ("subcategory_id")
-);
-]]></item>
-        <item><![CDATA[
-CREATE INDEX "idx_meal_category" ON "meal_category" ("subcategory_id");
-]]></item>
-        <item><![CDATA[
-CREATE INDEX "idx_meal_name" ON "meal" ("name_upper");
-]]></item>
-        <item><![CDATA[
-CREATE TABLE IF NOT EXISTS "calcualtion_settings" (
-       "_id"                INTEGER PRIMARY KEY NOT NULL,
-       "s_id"               INTEGER,
-       "profile_name"       TEXT NOT NULL,
-       "item_type"          TEXT NOT NULL,
-       "item_start_time"    INTEGER,
-       "item_value_min"     INTEGER,
-       "item_value_max"     INTEGER
+CREATE TABLE IF NOT EXISTS "comments" (
+       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "device_id"				CHAR(50) NOT NULL DEFAULT 'device_id',
+       "name"			    	CHAR(50) NOT NULL DEFAULT 'name',
+       "comment"				TEXT DEFAULT '',
+       "rating"				    INTEGER NOT NULL DEFAULT 0,
+       "apartment_id"			INTEGER NOT NULL DEFAULT 0
        );
 ]]></item>
+
+
+
+
+        <item><![CDATA[
+CREATE TABLE IF NOT EXISTS "apartments" (
+       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "city_id"				INTEGER NOT NULL DEFAULT 0,
+       "district_id"			INTEGER NOT NULL DEFAULT 0,
+       "expiredate"				DATE,
+       "title"				    CHAR(50) NOT NULL DEFAULT '',
+       "beds"				    INTEGER NOT NULL DEFAULT 1,
+       "rooms"				    INTEGER NOT NULL DEFAULT 1,
+       "street_address"			CHAR(50) NOT NULL DEFAULT '',
+       "house_num"				INTEGER NOT NULL DEFAULT 0,
+       "apt_num"				INTEGER NOT NULL DEFAULT 0,
+       "rating"				    INTEGER NOT NULL DEFAULT 0,
+       "phone_num"				CHAR(50) NOT NULL DEFAULT '',
+       "contact_name"			CHAR(50) NOT NULL DEFAULT '',
+       "price"			        DECIMAL(10,5) NOT NULL DEFAULT 0,
+       "description"			TEXT
+       );
+]]></item>
+
+
+        <item><![CDATA[
+CREATE TABLE IF NOT EXISTS "call_history" (
+       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "apartment_id"			INTEGER NOT NULL DEFAULT 0,
+       "phone_num"				CHAR(50) NOT NULL DEFAULT '',
+       "contact_name"			CHAR(50) NOT NULL DEFAULT '',
+       "calltime"				DATETIME,
+        "is_positive"                      BOOLEAN NOT NULL DEFAULT 0
+       );
+]]></item>
+
 
     </string-array>
 </resources>
