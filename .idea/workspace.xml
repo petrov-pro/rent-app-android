@@ -27,7 +27,7 @@
     <file path="/MenuFrame.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1377017675991" ignored="false" />
     <file path="/fragment.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1377020256196" ignored="false" />
     <file path="/Utils.java" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1379643217659" ignored="false" />
-    <file path="/database.xml" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1379647897630" ignored="false" />
+    <file path="/database.xml" changelist="176b8973-cbbe-404e-af81-221574281fc4" time="1379650248353" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +100,7 @@
       <file leaf-file-name="database.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/res/values/database.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="65" selection-start="2622" selection-end="2622" vertical-scroll-proportion="1.8554007">
+            <state line="85" column="32" selection-start="3055" selection-end="3055" vertical-scroll-proportion="0.71254355">
               <folding />
             </state>
           </provider>
@@ -605,7 +605,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/database.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="65" selection-start="2622" selection-end="2622" vertical-scroll-proportion="1.8554007">
+        <state line="85" column="32" selection-start="3055" selection-end="3055" vertical-scroll-proportion="0.71254355">
           <folding />
         </state>
       </provider>

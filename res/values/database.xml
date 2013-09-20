@@ -82,7 +82,10 @@ CREATE TABLE IF NOT EXISTS "call_history" (
        "phone_num"				CHAR(50) NOT NULL DEFAULT '',
        "contact_name"			CHAR(50) NOT NULL DEFAULT '',
        "calltime"				DATETIME,
-        "is_positive"                      BOOLEAN NOT NULL DEFAULT 0
+       "comment"				TEXT,
+       "rating"			        INTEGER NOT NULL DEFAULT 0,
+       "is_sent"				BOOLEAN DEFAULT 0,
+        "is_positive"                      BOOLEAN
        );
 ]]></item>
 
