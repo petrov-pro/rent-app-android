@@ -61,20 +61,8 @@ public class RentAppState extends Application {
     }
 
 
-    //stub
-    public int getCouner(){
-        if(counter>10) counter=0;
-        return counter+=3;
-    }
 
 
-    public static void setTabHeight(int tabHeight) {
-        tabHeight = tabHeight;
-    }
-
-    public static int getTabHeight() {
-        return tabHeight;
-    }
 
 
     public static Context getContext() {
