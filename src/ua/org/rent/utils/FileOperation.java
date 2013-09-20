@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ua.org.rent.library;
+package ua.org.rent.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

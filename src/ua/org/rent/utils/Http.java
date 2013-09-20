@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ua.org.rent.library;
+package ua.org.rent.utils;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.client.HttpClient;

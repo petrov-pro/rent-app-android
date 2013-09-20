@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import ua.org.rent.R;
-import ua.org.rent.RentAppState;
+import ua.org.rent.settings.RentAppState;
 
 public class DB extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "rentapp.sqlite";

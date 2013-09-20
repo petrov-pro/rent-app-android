@@ -1,4 +1,4 @@
-package ua.org.rent;
+package ua.org.rent.settings;
 
 /**
  * Created with IntelliJ IDEA.
