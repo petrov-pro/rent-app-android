@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MainActivity</string>
+	<string name="app_name">Tab</string>
+	<string name="search">Search</string>
+	<string name="result">Result</string>
+	<string name="history">History</string>
 </resources>

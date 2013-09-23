@@ -4,7 +4,7 @@
         <item><![CDATA[
 CREATE TABLE IF NOT EXISTS "cities" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-       "title"				CHAR(50) NOT NULL DEFAULT 'xxx',
+       "title"				CHAR(50) NOT NULL DEFAULT \'xxx\',
        "latitude"           DECIMAL(10,5) NOT NULL DEFAULT 0
        "longitude"          DECIMAL(10,5) NOT NULL DEFAULT 0,
        "radius"         	DECIMAL(10,5) NOT NULL DEFAULT 0,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS "cities" (
 CREATE TABLE IF NOT EXISTS "districts" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "city_id"         	INTEGER NOT NULL DEFAULT 0,
-       "title"				CHAR(50) NOT NULL DEFAULT 'xxx',
+       "title"				CHAR(50) NOT NULL DEFAULT \'xxx\',
        "is_center"          BOOLEAN NOT NULL DEFAULT 0,
        "description"        TEXT
        );
@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS "districts" (
         <item><![CDATA[
 CREATE TABLE IF NOT EXISTS "features_list" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-       "title"				CHAR(50) NOT NULL DEFAULT 'удобства',
-       "ico"				CHAR(50) NOT NULL DEFAULT 'default_ico'
+       "title"				CHAR(50) NOT NULL DEFAULT \'удобства\',
+       "ico"				CHAR(50) NOT NULL DEFAULT \'default_ico\'
        );
 ]]></item>
 
@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS "features_apartments" (
         <item><![CDATA[
 CREATE TABLE IF NOT EXISTS "comments" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-       "device_id"				CHAR(50) NOT NULL DEFAULT 'device_id',
-       "name"			    	CHAR(50) NOT NULL DEFAULT 'name',
-       "comment"				TEXT DEFAULT '',
+       "device_id"				CHAR(50) NOT NULL DEFAULT \'device_id\',
+       "name"			    	CHAR(50) NOT NULL DEFAULT \'name\',
+       "comment"				TEXT DEFAULT \'\',
        "rating"				    INTEGER NOT NULL DEFAULT 0,
        "apartment_id"			INTEGER NOT NULL DEFAULT 0
        );
@@ -60,15 +60,15 @@ CREATE TABLE IF NOT EXISTS "apartments" (
        "city_id"				INTEGER NOT NULL DEFAULT 0,
        "district_id"			INTEGER NOT NULL DEFAULT 0,
        "expiredate"				DATE,
-       "title"				    CHAR(50) NOT NULL DEFAULT '',
+       "title"				    CHAR(50) NOT NULL DEFAULT \'\',
        "beds"				    INTEGER NOT NULL DEFAULT 1,
        "rooms"				    INTEGER NOT NULL DEFAULT 1,
-       "street_address"			CHAR(50) NOT NULL DEFAULT '',
+       "street_address"			CHAR(50) NOT NULL DEFAULT \'\',
        "house_num"				INTEGER NOT NULL DEFAULT 0,
        "apt_num"				INTEGER NOT NULL DEFAULT 0,
        "rating"				    INTEGER NOT NULL DEFAULT 0,
-       "phone_num"				CHAR(50) NOT NULL DEFAULT '',
-       "contact_name"			CHAR(50) NOT NULL DEFAULT '',
+       "phone_num"				CHAR(50) NOT NULL DEFAULT \'\',
+       "contact_name"			CHAR(50) NOT NULL DEFAULT \'\',
        "price"			        DECIMAL(10,5) NOT NULL DEFAULT 0,
        "description"			TEXT
        );
@@ -79,8 +79,8 @@ CREATE TABLE IF NOT EXISTS "apartments" (
 CREATE TABLE IF NOT EXISTS "call_history" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "apartment_id"			INTEGER NOT NULL DEFAULT 0,
-       "phone_num"				CHAR(50) NOT NULL DEFAULT '',
-       "contact_name"			CHAR(50) NOT NULL DEFAULT '',
+       "phone_num"				CHAR(50) NOT NULL DEFAULT \'\',
+       "contact_name"			CHAR(50) NOT NULL DEFAULT \'\',
        "calltime"				DATETIME,
        "comment"				TEXT,
        "rating"			        INTEGER NOT NULL DEFAULT 0,
