@@ -5,11 +5,16 @@
 package ua.org.rent.controller;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import ua.org.rent.R;
+import ua.org.rent.library.*;
 
 /**
- *
+ * 
  * @author petroff
  */
 public class Search extends Activity {
@@ -20,6 +25,15 @@ public class Search extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.cap);
+		setContentView(R.layout.search);
+		Cursor city = DB.getAllCity();
+		startManagingCursor(city);
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+				android.R.layout.simple_list_item_1, city,
+				new String[] { DB.TABLE_CITY_TITLE },
+				new int[] { android.R.id.text1 });
+		ListView listCity = (ListView) findViewById(R.id.city_list);
+		listCity.setAdapter(adapter);
+		listCity.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
 }
