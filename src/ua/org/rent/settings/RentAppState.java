@@ -39,8 +39,7 @@ import android.util.Log;
 public class RentAppState extends Application {
     private static RentAppState sInstance;
     private static Context mContext;
-    private static int counter=0;
-    private static int tabHeight = 0;
+
 
     public static RentAppState getAppInstance() {
         if (sInstance == null) {
