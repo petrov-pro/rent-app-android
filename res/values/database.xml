@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS "cities" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "title"				CHAR(50) NOT NULL DEFAULT \'xxx\',
-       "latitude"           DECIMAL(10,5) NOT NULL DEFAULT 0
+       "latitude"           DECIMAL(10,5) NOT NULL DEFAULT 0,
        "longitude"          DECIMAL(10,5) NOT NULL DEFAULT 0,
        "radius"         	DECIMAL(10,5) NOT NULL DEFAULT 0,
        "description"        TEXT
@@ -87,6 +87,8 @@ CREATE TABLE IF NOT EXISTS "call_history" (
        "is_sent"				BOOLEAN DEFAULT 0,
         "is_positive"                      BOOLEAN
        );
+
 ]]></item-->
+
     </string-array>
 </resources>
