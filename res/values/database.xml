@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="DDL">
-        <item><![CDATA[
+        <!--item><![CDATA[
 CREATE TABLE IF NOT EXISTS "cities" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "title"				CHAR(50) NOT NULL DEFAULT \'xxx\',
@@ -87,10 +87,8 @@ CREATE TABLE IF NOT EXISTS "call_history" (
        "is_sent"				BOOLEAN DEFAULT 0,
         "is_positive"                      BOOLEAN
        );
-]]></item>
 
-
-
+]]></item-->
 
     </string-array>
 </resources>

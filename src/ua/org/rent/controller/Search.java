@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import ua.org.rent.R;
 import ua.org.rent.library.*;
 
@@ -29,11 +30,11 @@ public class Search extends Activity {
 		Cursor city = DB.getAllCity();
 		startManagingCursor(city);
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, city,
+				android.R.layout.simple_spinner_item, city,
 				new String[] { DB.TABLE_CITY_TITLE },
 				new int[] { android.R.id.text1 });
-		ListView listCity = (ListView) findViewById(R.id.city_list);
-		listCity.setAdapter(adapter);
-		listCity.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		Spinner SpinnerCity = (Spinner) findViewById(R.id.city_list);
+		SpinnerCity.setAdapter(adapter);
 	}
 }
