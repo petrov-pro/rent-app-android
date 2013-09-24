@@ -1,0 +1,9 @@
+bin/*
+~/bin/*
+out/
+.idea/
+.settings/
+gen/
+.project
+local.properties
+.classpath
