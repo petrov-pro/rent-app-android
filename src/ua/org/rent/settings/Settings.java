@@ -17,7 +17,8 @@ public class Settings {
     private static Settings sInstance;
     private final SharedPreferences mPreferences;
     private final static String KEY_ACCESS_TOKEN = "access_token";
-
+    public final static int DEFAULT_CITY_ID = 1;
+    public final static int[] DEFAULT_DISTRICT_ID = {1};
 
     private Settings(Context context){
         mPreferences = context.getSharedPreferences(
