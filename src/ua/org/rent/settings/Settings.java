@@ -1,5 +1,7 @@
 package ua.org.rent.settings;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,7 +20,10 @@ public class Settings {
     private final SharedPreferences mPreferences;
     private final static String KEY_ACCESS_TOKEN = "access_token";
     public final static int DEFAULT_CITY_ID = 1;
-    public final static int[] DEFAULT_DISTRICT_ID = {1};
+    public final static ArrayList<Integer> DEFAULT_DISTRICT_ID = new ArrayList<Integer>();
+    static{
+    	DEFAULT_DISTRICT_ID.add(1);
+    }
 
     private Settings(Context context){
         mPreferences = context.getSharedPreferences(

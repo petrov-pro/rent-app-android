@@ -2,6 +2,7 @@ package ua.org.rent.library;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,10 +18,16 @@ public class DB extends SQLiteOpenHelper {
 	//city table
 	public static final String DB_TABLE_CITY = "cities";
 	public static final String TABLE_CITY_TITLE = "title";
-
-	private static final int DATABASE_VERSION = 3;
+	
+	//district table
+	public static final String DB_TABLE_DISTRICT = "districts";
+	public static final String TABLE_DISTRICT_TITLE = "title";
+	public static final String TABLE_DISTRICT_ID = "_id";
+	
+	private static final int DATABASE_VERSION = 15;
 	private volatile static DB sInstance;
 	private final Context mContext;
+	String[] items;
 
 	public static SQLiteDatabase getDb() {
 		if (sInstance == null) {
@@ -47,11 +54,11 @@ public class DB extends SQLiteOpenHelper {
 
 	private void createTables(SQLiteDatabase db) {
 		 String[] items = mContext.getResources().getStringArray(
-				R.array.DDL);
+				R.array.TABLES);
 		for (String ddl : items) {
 			db.execSQL(ddl);
 		}
-		
+
 		//start data
 		items = mContext.getResources().getStringArray(
 				R.array.START_DATA);
@@ -158,4 +165,8 @@ public class DB extends SQLiteOpenHelper {
 	public static final Cursor  getAllCity() {
          return getDb().query(DB_TABLE_CITY, null, null, null, null, null, null);
     }
+	
+	public static final Cursor  getDistrictById(Integer city_id) {
+        return getDb().query(DB_TABLE_DISTRICT, null, "city_id = ?", new String[] {city_id.toString()}, null, null, null);
+   }
 }

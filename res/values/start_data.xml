@@ -50,6 +50,25 @@ VALUES (\'Йошкар олы\',1,1,1,\'Город-герой, троешина 
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Рио\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
+
+<item><![CDATA[
+            INSERT INTO districts (city_id,title,is_center,description)
+VALUES (1,\'Лесной\',0,\'Лесной райончик\');
+]]></item>
+<item><![CDATA[
+            INSERT INTO districts (city_id,title,is_center,description)
+VALUES (1,\'Троешина\',0,\'Четкий райончик\');
+]]></item>
+
+<item><![CDATA[
+            INSERT INTO districts (city_id,title,is_center,description)
+VALUES (2,\'Замоскворечье\',0,\'Москва райончик\');
+]]></item>
+<item><![CDATA[
+            INSERT INTO districts (city_id,title,is_center,description)
+VALUES (2,\'Арбат\',1,\'Москва райончик\');
+]]></item>
+
     </string-array>
 
 </resources>
