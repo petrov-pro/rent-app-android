@@ -60,8 +60,8 @@ public class SearchModel {
 
 	public void setSelectionDistrict(int id, int position, ListDistrictAdapter adapterDistrict) {
 		if (searchData.district_id.contains(id)) {
-			searchData.district_id.remove(position);
-			searchData.district_name.remove(position);
+			searchData.district_id.remove(searchData.district_id.indexOf(id));
+			searchData.district_name.remove(id);
 		} else {
 			searchData.district_id.add(id);
 			Cursor district = (Cursor)adapterDistrict.getItem(position);
