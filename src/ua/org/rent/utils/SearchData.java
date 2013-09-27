@@ -4,11 +4,15 @@ import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchData implements Parcelable {
 
 	public int city_id;
 	public ArrayList<Integer> district_id;
+	public String city_name;
+	public Map<Integer, String> district_name;
 
 	public int describeContents() {
 		return 0;
@@ -17,6 +21,8 @@ public class SearchData implements Parcelable {
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(city_id);
 		out.writeList(district_id);
+		out.writeString(city_name);
+		out.writeMap(district_name);
 
 	}
 
@@ -32,12 +38,16 @@ public class SearchData implements Parcelable {
 
 	private SearchData(Parcel in) {
 		city_id = in.readInt();
-		 in.readList(district_id, Integer.class.getClassLoader());
+		in.readList(district_id, Integer.class.getClassLoader());
+		city_name = in.readString();
+		in.readMap(district_name, null);
 
 	}
 
-	public SearchData(int city_id, ArrayList<Integer> district_id) {
+	public SearchData(int city_id, ArrayList<Integer> district_id, String city_name, Map<Integer, String> district_name) {
 		this.city_id = city_id;
 		this.district_id = district_id;
+		this.city_name = city_name;
+		this.district_name = district_name;
 	}
 }

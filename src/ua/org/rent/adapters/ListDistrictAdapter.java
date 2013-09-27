@@ -6,6 +6,7 @@ import java.util.Arrays;
 import ua.org.rent.library.DB;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ public class ListDistrictAdapter extends SimpleCursorAdapter {
 	Context context;
 	int layout;
 	ArrayList<Integer> district_id;
-	
+
 	public ListDistrictAdapter(Context context, int layout, Cursor c,
 			String[] from, int[] to, ArrayList<Integer> district_id) {
 		super(context, layout, c, from, to);
@@ -32,16 +33,19 @@ public class ListDistrictAdapter extends SimpleCursorAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if (convertView == null)
-			convertView = View.inflate(context, layout,null);
+		if (convertView == null) {
+			convertView = View.inflate(context, layout, null);
+		}
 		if (c.moveToPosition(position)) {
 			TextView district = (TextView) convertView.findViewById(android.R.id.text1);
 			district.setText(c.getString(c.getColumnIndexOrThrow(DB.TABLE_DISTRICT_TITLE)));
 			int district_id = c.getInt(c.getColumnIndexOrThrow(DB.TABLE_DISTRICT_ID));
-
-
+			if (this.district_id.contains(district_id)) {
+				district.setBackgroundColor(Color.GRAY);
+			} else {
+				district.setBackgroundColor(Color.BLACK);
+			}
 		}
 		return convertView;
 	}
-
 }

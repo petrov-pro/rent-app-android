@@ -18,7 +18,7 @@ public class DB extends SQLiteOpenHelper {
 	//city table
 	public static final String DB_TABLE_CITY = "cities";
 	public static final String TABLE_CITY_TITLE = "title";
-	
+	public static final String TABLE_CITY_ID = "_id";
 	//district table
 	public static final String DB_TABLE_DISTRICT = "districts";
 	public static final String TABLE_DISTRICT_TITLE = "title";

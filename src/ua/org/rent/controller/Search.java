@@ -9,35 +9,31 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import ua.org.rent.R;
 import ua.org.rent.adapters.ListDistrictAdapter;
-import ua.org.rent.helpers.SearchHelper;
 import ua.org.rent.library.*;
+import ua.org.rent.models.SearchModel;
 import ua.org.rent.settings.Settings;
-import ua.org.rent.utils.SearchData;
 
 /**
- * 
+ *
  * @author petroff
  */
 @TargetApi(3)
 public class Search extends Activity {
-	SearchData searchData;
+	
+	SearchModel searchModel;
 	Button btDistrict;
+	private boolean firstInit = true;
 
 	/**
 	 * Called when the activity is first created.
@@ -46,52 +42,55 @@ public class Search extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
-		searchData = (SearchData) getLastNonConfigurationInstance();
-		if (searchData == null) {
-			searchData = new SearchData(Settings.DEFAULT_CITY_ID,
-					Settings.DEFAULT_DISTRICT_ID);
+		searchModel = (SearchModel) getLastNonConfigurationInstance();
+		if (searchModel == null) {
+			searchModel = new SearchModel(this);
 		}
-		btDistrict = (Button)findViewById(R.id.btD);
-		setTextOnButtonDistrict();
+		btDistrict = (Button) findViewById(R.id.btD);
+		btDistrict.setText(searchModel.setTextOnButtonDistrict());
 		// spinner city
 		Cursor city = DB.getAllCity();
 		startManagingCursor(city);
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_spinner_item, city,
-				new String[] { DB.TABLE_CITY_TITLE },
-				new int[] { android.R.id.text1 });
+				new String[]{DB.TABLE_CITY_TITLE},
+				new int[]{android.R.id.text1});
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner SpinnerCity = (Spinner) findViewById(R.id.city_list);
 		SpinnerCity.setAdapter(adapter);
-		SpinnerCity.setSelection(SearchHelper.returnPosition(adapter,
-				searchData.city_id));
+		
+		SpinnerCity.setSelection(searchModel.returnPosition(adapter,
+				searchModel.searchData.city_id));
 		SpinnerCity.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				searchData.city_id = (int) id;
-				searchData.district_id.clear();
-				setTextOnButtonDistrict();
+				if (!firstInit) {
+					searchModel.setSelectionCity(id);
+					btDistrict.setText(searchModel.setTextOnButtonDistrict());
+				} else {
+					firstInit = false;
+				}
 			}
-
+			
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
-
+		
 	}
-
+	
 	@Override
 	public Object onRetainNonConfigurationInstance() {
-		return searchData;
+		return searchModel;
 	}
-
+	
 	public void showListDistrict(View v) {
 		// listview district
-		Cursor district = DB.getDistrictById(searchData.city_id);
+		Cursor district = DB.getDistrictById(searchModel.searchData.city_id);
 		startManagingCursor(district);
 		final ListDistrictAdapter adapterDistrict = new ListDistrictAdapter(
 				Search.this, android.R.layout.simple_list_item_1, district,
-				new String[] { DB.TABLE_DISTRICT_TITLE },
-				new int[] { android.R.id.text1 }, searchData.district_id);
+				new String[]{DB.TABLE_DISTRICT_TITLE},
+				new int[]{android.R.id.text1}, searchModel.searchData.district_id);
 		ListView lv = new ListView(this);
 		lv.setAdapter(adapterDistrict);
 		lv.setChoiceMode(lv.CHOICE_MODE_MULTIPLE);
@@ -101,31 +100,22 @@ public class Search extends Activity {
 					long id) {
 				// do something on click
 				v.setSelected(true);
-				searchData.district_id.add((int)id);
+				searchModel.setSelectionDistrict((int) id, position, adapterDistrict);
 				adapterDistrict.notifyDataSetChanged();
 			}
 		});
 		AlertDialog.Builder builderSingle = new AlertDialog.Builder(Search.this);
-		// builderSingle.setIcon(R.drawable.ic_launcher);
 		builderSingle.setTitle(getText(R.string.select_district));
 		builderSingle.setView(lv);
 		builderSingle.setPositiveButton(getText(R.string.ok),
 				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				btDistrict.setText(searchModel.setTextOnButtonDistrict());
+				dialog.dismiss();
+			}
+		});
+		
 		builderSingle.show();
-	}
-	
-	private void setTextOnButtonDistrict(){
-		if(searchData.district_id.size() == 0){
-			btDistrict.setText(getText(R.string.all));
-		}else{
-			
-		}
 	}
 }

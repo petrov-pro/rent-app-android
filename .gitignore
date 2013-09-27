@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 .idea/*
 gen/*
 out/*
-
-=======
 bin/*
 ~/bin/*
 out/
@@ -13,4 +10,4 @@ gen/
 .project
 local.properties
 .classpath
->>>>>>> 99e7ef528d6e98182d0e231f93b9caeac8d7d946
+

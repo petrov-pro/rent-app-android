@@ -10,4 +10,6 @@
 	<string name="ok">Ok</string>
 	<string name="cancel">Cancel</string>
 	<string name="all">Все</string>
+	<string name="default_city_name">Киев</string>
+	<string name="default_district_name">Лесной</string>
 </resources>
