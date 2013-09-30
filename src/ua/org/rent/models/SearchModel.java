@@ -6,6 +6,8 @@ package ua.org.rent.models;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.database.MergeCursor;
 import android.widget.SimpleCursorAdapter;
 import java.util.ArrayList;
 import ua.org.rent.R;
@@ -33,8 +35,8 @@ public class SearchModel {
 		if (searchData.district_id.size() == 0) {
 			return a.getText(R.string.all).toString();
 		} else {
-			
-			for ( String value : searchData.district_name.values()){
+
+			for (String value : searchData.district_name.values()) {
 				res_str = res_str + " " + value;
 			}
 			return res_str;
@@ -64,8 +66,17 @@ public class SearchModel {
 			searchData.district_name.remove(position);
 		} else {
 			searchData.district_id.add(id);
-			Cursor district = (Cursor)adapterDistrict.getItem(position);
+			Cursor district = (Cursor) adapterDistrict.getItem(position);
 			searchData.district_name.put(id, district.getString(district.getColumnIndexOrThrow(DB.TABLE_DISTRICT_TITLE)));
 		}
+	}
+
+	public Cursor getDistrictById() {
+		Cursor district = DB.getDistrictById(searchData.city_id);
+		MatrixCursor extras = new MatrixCursor(new String[]{"_id", "title"});
+		extras.addRow(new String[]{"0", a.getText(R.string.all).toString()});
+		Cursor[] cursors = {extras, district};
+		district = new MergeCursor(cursors);
+		return district;
 	}
 }
