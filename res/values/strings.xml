@@ -12,4 +12,9 @@
 	<string name="all">Все</string>
 	<string name="default_city_name">Киев</string>
 	<string name="default_district_name">Лесной</string>
+	<string name="quantity_room">К-во Комнат</string>
+	<string name="quantity_beds">К-во Спалн. мест</string>
+	<string name="tRS">Диапозон цен,</string>
+	<string name="tRSfrom">от</string>
+	<string name="tRSto">до</string>
 </resources>

@@ -22,9 +22,11 @@ public class Settings extends Application {
 	private final SharedPreferences mPreferences;
 	private final static String KEY_ACCESS_TOKEN = "access_token";
 	public final static int DEFAULT_CITY_ID = 1;
-	public static ArrayList<Integer> DEFAULT_DISTRICT_ID = new ArrayList<Integer>(Arrays.asList(1));
+	public static ArrayList<Integer> DEFAULT_DISTRICT_ID = new ArrayList<Integer>(Arrays.asList(0));
 	public static String DEFAULT_CITY_NAME = "";
 	public static Map<Integer, String> DEFAULT_DISTRICT_NAME = new HashMap<Integer, String>();
+	public static Integer PRICE_FROM = 0;
+	public static Integer PRICE_TO = 1000;
 	
 	private Settings(Context context) {
 		mPreferences = context.getSharedPreferences(
@@ -46,7 +48,7 @@ public class Settings extends Application {
 	}
 	
 	public static Map<Integer, String> getDEFAULT_DISTRICT_NAME() {
-		DEFAULT_DISTRICT_NAME.put(DEFAULT_DISTRICT_ID.get(0), RentAppState.getAppInstance().getText(R.string.default_district_name).toString());
+		DEFAULT_DISTRICT_NAME.put(DEFAULT_DISTRICT_ID.get(0), RentAppState.getAppInstance().getText(R.string.all).toString());
 		return DEFAULT_DISTRICT_NAME;
 	}
 	
