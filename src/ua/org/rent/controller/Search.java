@@ -7,7 +7,6 @@ package ua.org.rent.controller;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.database.Cursor;
@@ -28,7 +27,6 @@ import ua.org.rent.R;
 import ua.org.rent.adapters.ListDistrictAdapter;
 import ua.org.rent.library.*;
 import ua.org.rent.models.SearchModel;
-import ua.org.rent.settings.Settings;
 import ua.org.rent.widgets.RangeSeekBar;
 import ua.org.rent.widgets.RangeSeekBar.OnRangeSeekBarChangeListener;
 
@@ -38,12 +36,14 @@ import ua.org.rent.widgets.RangeSeekBar.OnRangeSeekBarChangeListener;
  */
 @TargetApi(3)
 public class Search extends Activity {
-
-	SearchModel searchModel;
-	Button btDistrict;
+	
+	private SearchModel searchModel;
+	private Button btDistrict;
 	private boolean firstInit = true;
 	private TextView tRSfrom;
 	private TextView tRSto;
+	private Button btQR;
+	private Button btQB;
 
 	/**
 	 * Called when the activity is first created.
@@ -68,7 +68,7 @@ public class Search extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner SpinnerCity = (Spinner) findViewById(R.id.city_list);
 		SpinnerCity.setAdapter(adapter);
-
+		
 		SpinnerCity.setSelection(searchModel.returnPosition(adapter,
 				searchModel.searchData.city_id));
 		SpinnerCity.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -81,26 +81,35 @@ public class Search extends Activity {
 					firstInit = false;
 				}
 			}
-
+			
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
 		//create rangeseek widget
 		createRangeSeek();
+		btQR = (Button) findViewById(R.id.btQR);
+		btQB = (Button) findViewById(R.id.btQB);
+		setRoomsBeds();
+		
 	}
-
+	
+	private void setRoomsBeds() {
+		btQR.setText(searchModel.searchData.countRoom.toString());
+		btQB.setText(searchModel.searchData.countBed.toString());
+	}
+	
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		return searchModel;
 	}
-
+	
 	private void createRangeSeek() {
 		// create RangeSeekBar as Integer range between 20 and 75
 		tRSfrom = (TextView) findViewById(R.id.tRSfrom);
 		tRSto = (TextView) findViewById(R.id.tRSto);
-		tRSfrom.setText(Settings.PRICE_FROM.toString());
-		tRSto.setText(Settings.PRICE_TO.toString());
-		RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(Settings.PRICE_FROM, Settings.PRICE_TO, this);
+		tRSfrom.setText(searchModel.getPriceFrom().toString());
+		tRSto.setText(searchModel.getPriceTo().toString());
+		RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(searchModel.getPriceFrom(), searchModel.getPriceTo(), this);
 		seekBar.setOnRangeSeekBarChangeListener(new OnRangeSeekBarChangeListener<Integer>() {
 			@Override
 			public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
@@ -109,11 +118,11 @@ public class Search extends Activity {
 				tRSto.setText(maxValue.toString());
 			}
 		});
-
+		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.lRS);
 		layout.addView(seekBar);
 	}
-
+	
 	public void showListDistrict(View v) {
 		// listview district
 		Cursor district = searchModel.getDistrictById();
@@ -145,20 +154,43 @@ public class Search extends Activity {
 				dialog.dismiss();
 			}
 		});
-
+		
 		builderSingle.show();
 	}
-
+	
 	public void showQuantityRoom(View v) {
-		Integer[] data = {1, 2, 3, 4};
+		showDialogRoomBed("room");
+	}
+	
+	public void showQuantityBeds(View v) {
+		showDialogRoomBed("beds");
+	}
+	
+	private void showDialogRoomBed(final String type) {
+		Integer[] data;
+		String title;
+		if (type.equals("room")) {
+			title = getText(R.string.quantity_room).toString();
+			data = searchModel.getQuantityRoom();
+		} else {
+			title = getText(R.string.quantity_beds).toString();
+			data = searchModel.getQuantityBeds();
+		}
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-		adb.setTitle(R.string.quantity_room);
+		adb.setTitle(title);
 		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,
 				android.R.layout.select_dialog_singlechoice, data);
-		adb.setSingleChoiceItems(adapter, -1, new OnClickListener() {
+		adb.setSingleChoiceItems(adapter, 0, new OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				
+				if (type.equals("room")) {
+					searchModel.searchData.countRoom = searchModel.getQuantityRoom(which);
+				} else {
+					searchModel.searchData.countBed = searchModel.getQuantityBeds(which);
+				}
+				setRoomsBeds();
+				dialog.dismiss();
 			}
 		});
+		adb.show();
 	}
 }

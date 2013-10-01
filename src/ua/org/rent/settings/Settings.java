@@ -27,6 +27,8 @@ public class Settings extends Application {
 	public static Map<Integer, String> DEFAULT_DISTRICT_NAME = new HashMap<Integer, String>();
 	public static Integer PRICE_FROM = 0;
 	public static Integer PRICE_TO = 1000;
+	public static Integer[] DEFAULT_QuantityRoom = {1, 2, 3, 4};
+	public static Integer[] DEFAULT_QuantityBeds = {1, 2, 3, 4};
 	
 	private Settings(Context context) {
 		mPreferences = context.getSharedPreferences(

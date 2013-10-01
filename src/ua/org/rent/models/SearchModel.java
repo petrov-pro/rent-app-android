@@ -26,7 +26,8 @@ public class SearchModel {
 	Activity a;
 
 	public SearchModel(Activity a) {
-		searchData = new SearchData(Settings.DEFAULT_CITY_ID, Settings.DEFAULT_DISTRICT_ID, Settings.getDEFAULT_CITY_NAME(), Settings.getDEFAULT_DISTRICT_NAME());
+		searchData = new SearchData(Settings.DEFAULT_CITY_ID, Settings.DEFAULT_DISTRICT_ID, Settings.getDEFAULT_CITY_NAME(), Settings.getDEFAULT_DISTRICT_NAME(),
+				Settings.DEFAULT_QuantityRoom[0], Settings.DEFAULT_QuantityBeds[0]);
 		this.a = a;
 	}
 
@@ -78,5 +79,29 @@ public class SearchModel {
 		Cursor[] cursors = {extras, district};
 		district = new MergeCursor(cursors);
 		return district;
+	}
+
+	public Integer getPriceFrom() {
+		return Settings.PRICE_FROM;
+	}
+
+	public Integer getPriceTo() {
+		return Settings.PRICE_TO;
+	}
+
+	public Integer[] getQuantityRoom() {
+		return Settings.DEFAULT_QuantityRoom;
+	}
+
+	public Integer getQuantityRoom(int pos) {
+		return Settings.DEFAULT_QuantityRoom[pos];
+	}
+
+	public Integer[] getQuantityBeds() {
+		return Settings.DEFAULT_QuantityBeds;
+	}
+
+	public Integer getQuantityBeds(int pos) {
+		return Settings.DEFAULT_QuantityBeds[pos];
 	}
 }

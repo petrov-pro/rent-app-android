@@ -13,6 +13,8 @@ public class SearchData implements Parcelable {
 	public ArrayList<Integer> district_id;
 	public String city_name;
 	public Map<Integer, String> district_name;
+	public Integer countRoom;
+	public Integer countBed;
 
 	public int describeContents() {
 		return 0;
@@ -23,6 +25,8 @@ public class SearchData implements Parcelable {
 		out.writeList(district_id);
 		out.writeString(city_name);
 		out.writeMap(district_name);
+		out.writeInt(countRoom);
+		out.writeInt(countBed);
 
 	}
 
@@ -41,13 +45,17 @@ public class SearchData implements Parcelable {
 		in.readList(district_id, Integer.class.getClassLoader());
 		city_name = in.readString();
 		in.readMap(district_name, null);
+		countRoom = in.readInt();
+		countBed = in.readInt();
 
 	}
 
-	public SearchData(int city_id, ArrayList<Integer> district_id, String city_name, Map<Integer, String> district_name) {
+	public SearchData(int city_id, ArrayList<Integer> district_id, String city_name, Map<Integer, String> district_name, int countRoom, int countBed) {
 		this.city_id = city_id;
 		this.district_id = district_id;
 		this.city_name = city_name;
 		this.district_name = district_name;
+		this.countRoom = countRoom;
+		this.countBed = countBed;
 	}
 }
