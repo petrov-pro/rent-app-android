@@ -17,4 +17,5 @@
 	<string name="tRS">Диапозон цен,</string>
 	<string name="tRSfrom">от</string>
 	<string name="tRSto">до</string>
+	<string name="feature">Удобства</string>
 </resources>

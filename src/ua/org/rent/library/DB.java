@@ -24,7 +24,7 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_DISTRICT_TITLE = "title";
 	public static final String TABLE_DISTRICT_ID = "_id";
 	
-	private static final int DATABASE_VERSION = 15;
+	private static final int DATABASE_VERSION = 16;
 	private volatile static DB sInstance;
 	private final Context mContext;
 	String[] items;

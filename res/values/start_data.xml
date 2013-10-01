@@ -1,74 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="START_DATA">
-        <item><![CDATA[
+	<string-array name="START_DATA">
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Киев\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Москва\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Кишенев\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Бангладеш\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Ливерпуль\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Афган\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Алматы\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Белфаст\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Ноябрьск\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Астрахань\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Йошкар олы\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
 VALUES (\'Рио\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
 
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO districts (city_id,title,is_center,description)
 VALUES (1,\'Лесной\',0,\'Лесной райончик\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO districts (city_id,title,is_center,description)
 VALUES (1,\'Троешина\',0,\'Четкий райончик\');
 ]]></item>
 
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO districts (city_id,title,is_center,description)
 VALUES (2,\'Замоскворечье\',0,\'Москва райончик\');
 ]]></item>
-<item><![CDATA[
+		<item><![CDATA[
             INSERT INTO districts (city_id,title,is_center,description)
 VALUES (2,\'Арбат\',1,\'Москва райончик\');
 ]]></item>
 
-    </string-array>
+		<item><![CDATA[
+            INSERT INTO features_list (title,ico)
+VALUES (\'Телевизор\',\'tv\');
+]]></item>
+
+		<item><![CDATA[
+            INSERT INTO features_list (title,ico)
+VALUES (\'Джакузи\',\'b\');
+]]></item>
+
+<item><![CDATA[
+            INSERT INTO features_list (title,ico)
+VALUES (\'Мебель\',\'furniture\');
+]]></item>
+
+	</string-array>
 
 </resources>

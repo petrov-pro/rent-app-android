@@ -15,6 +15,8 @@ public class SearchData implements Parcelable {
 	public Map<Integer, String> district_name;
 	public Integer countRoom;
 	public Integer countBed;
+	public Integer priceFrom;
+	public Integer priceTo;
 
 	public int describeContents() {
 		return 0;
