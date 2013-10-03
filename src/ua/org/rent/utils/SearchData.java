@@ -52,12 +52,15 @@ public class SearchData implements Parcelable {
 
 	}
 
-	public SearchData(int city_id, ArrayList<Integer> district_id, String city_name, Map<Integer, String> district_name, int countRoom, int countBed) {
+	public SearchData(int city_id, ArrayList<Integer> district_id, String city_name, Map<Integer, String> district_name, Integer countRoom, Integer countBed, Integer priceFrom,
+			 Integer priceTo) {
 		this.city_id = city_id;
 		this.district_id = district_id;
 		this.city_name = city_name;
 		this.district_name = district_name;
 		this.countRoom = countRoom;
 		this.countBed = countBed;
+		this.priceFrom = priceFrom;
+		this.priceTo = priceTo;
 	}
 }

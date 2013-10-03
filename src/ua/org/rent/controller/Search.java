@@ -27,6 +27,7 @@ import ua.org.rent.R;
 import ua.org.rent.adapters.ListDistrictAdapter;
 import ua.org.rent.library.*;
 import ua.org.rent.models.SearchModel;
+import ua.org.rent.settings.Settings;
 import ua.org.rent.widgets.RangeSeekBar;
 import ua.org.rent.widgets.RangeSeekBar.OnRangeSeekBarChangeListener;
 
@@ -58,6 +59,7 @@ public class Search extends Activity {
 		}
 		btDistrict = (Button) findViewById(R.id.btD);
 		btDistrict.setText(searchModel.setTextOnButtonDistrict());
+
 		// spinner city
 		Cursor city = DB.getAllCity();
 		startManagingCursor(city);
@@ -71,9 +73,11 @@ public class Search extends Activity {
 		
 		SpinnerCity.setSelection(searchModel.returnPosition(adapter,
 				searchModel.searchData.city_id));
+		
 		SpinnerCity.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
+				
 				if (!firstInit) {
 					searchModel.setSelectionCity(id);
 					btDistrict.setText(searchModel.setTextOnButtonDistrict());
@@ -103,19 +107,24 @@ public class Search extends Activity {
 		return searchModel;
 	}
 	
+	private void setPrice(){
+		tRSfrom.setText(searchModel.searchData.priceFrom.toString());
+		tRSto.setText(searchModel.searchData.priceTo.toString());
+	}
+	
 	private void createRangeSeek() {
 		// create RangeSeekBar as Integer range between 20 and 75
 		tRSfrom = (TextView) findViewById(R.id.tRSfrom);
 		tRSto = (TextView) findViewById(R.id.tRSto);
-		tRSfrom.setText(searchModel.getPriceFrom().toString());
-		tRSto.setText(searchModel.getPriceTo().toString());
+		setPrice();
 		RangeSeekBar<Integer> seekBar = new RangeSeekBar<Integer>(searchModel.getPriceFrom(), searchModel.getPriceTo(), this);
 		seekBar.setOnRangeSeekBarChangeListener(new OnRangeSeekBarChangeListener<Integer>() {
 			@Override
 			public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
 				// handle changed range values
-				tRSfrom.setText(minValue.toString());
-				tRSto.setText(maxValue.toString());
+				searchModel.searchData.priceFrom = minValue;
+				searchModel.searchData.priceTo = maxValue;
+				setPrice();
 			}
 		});
 		
@@ -138,7 +147,6 @@ public class Search extends Activity {
 			public void onItemClick(AdapterView<?> av, View v, int position,
 					long id) {
 				// do something on click
-				v.setSelected(true);
 				searchModel.setSelectionDistrict((int) id, position, adapterDistrict);
 				adapterDistrict.notifyDataSetChanged();
 			}

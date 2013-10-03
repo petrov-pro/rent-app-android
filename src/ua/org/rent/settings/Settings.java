@@ -22,6 +22,7 @@ public class Settings extends Application {
 	private final SharedPreferences mPreferences;
 	private final static String KEY_ACCESS_TOKEN = "access_token";
 	public final static int DEFAULT_CITY_ID = 1;
+	public final static Integer DEFAULT_DISTRICT_ALL = 9999;
 	public static ArrayList<Integer> DEFAULT_DISTRICT_ID = new ArrayList<Integer>(Arrays.asList(0));
 	public static String DEFAULT_CITY_NAME = "";
 	public static Map<Integer, String> DEFAULT_DISTRICT_NAME = new HashMap<Integer, String>();
