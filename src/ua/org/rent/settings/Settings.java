@@ -21,15 +21,10 @@ public class Settings extends Application {
 	private static Settings sInstance;
 	private final SharedPreferences mPreferences;
 	private final static String KEY_ACCESS_TOKEN = "access_token";
-	public final static int DEFAULT_CITY_ID = 1;
-	public final static Integer DEFAULT_DISTRICT_ALL = 9999;
-	public static ArrayList<Integer> DEFAULT_DISTRICT_ID = new ArrayList<Integer>(Arrays.asList(0));
-	public static String DEFAULT_CITY_NAME = "";
-	public static Map<Integer, String> DEFAULT_DISTRICT_NAME = new HashMap<Integer, String>();
-	public static Integer PRICE_FROM = 0;
-	public static Integer PRICE_TO = 1000;
-	public static Integer[] DEFAULT_QuantityRoom = {1, 2, 3, 4};
-	public static Integer[] DEFAULT_QuantityBeds = {1, 2, 3, 4};
+	
+	
+	
+	
 	
 	private Settings(Context context) {
 		mPreferences = context.getSharedPreferences(
@@ -45,15 +40,6 @@ public class Settings extends Application {
 		return sInstance;
 	}
 	
-	public static String getDEFAULT_CITY_NAME() {
-		DEFAULT_CITY_NAME = RentAppState.getAppInstance().getText(R.string.default_city_name).toString();
-		return DEFAULT_CITY_NAME;
-	}
-	
-	public static Map<Integer, String> getDEFAULT_DISTRICT_NAME() {
-		DEFAULT_DISTRICT_NAME.put(DEFAULT_DISTRICT_ID.get(0), RentAppState.getAppInstance().getText(R.string.all).toString());
-		return DEFAULT_DISTRICT_NAME;
-	}
 	
 	public synchronized String getAccessToken() {
 		return mPreferences.getString(KEY_ACCESS_TOKEN, null);

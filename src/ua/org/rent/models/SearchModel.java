@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import ua.org.rent.R;
 import ua.org.rent.adapters.ListDistrictAdapter;
+import ua.org.rent.entities.District;
 import ua.org.rent.library.DB;
-import ua.org.rent.settings.Settings;
-import static ua.org.rent.settings.Settings.DEFAULT_DISTRICT_ID;
-import ua.org.rent.utils.SearchData;
+import ua.org.rent.settings.Consts;
+import ua.org.rent.entities.SearchData;
 
 /**
  *
@@ -28,19 +28,20 @@ public class SearchModel {
 	Activity a;
 
 	public SearchModel(Activity a) {
-		searchData = new SearchData(Settings.DEFAULT_CITY_ID, (ArrayList<Integer>)Settings.DEFAULT_DISTRICT_ID.clone() , Settings.getDEFAULT_CITY_NAME(), Settings.getDEFAULT_DISTRICT_NAME(),
-				Settings.DEFAULT_QuantityRoom[0], Settings.DEFAULT_QuantityBeds[0], Settings.PRICE_FROM, Settings.PRICE_TO);
+
+		searchData = new SearchData();
 		this.a = a;
 	}
 
 	public String setTextOnButtonDistrict() {
 		String res_str = "";
-		if (searchData.district_id.isEmpty()) {
+		if (searchData.districts.isEmpty()) {
 			return a.getText(R.string.all).toString();
 		} else {
 
-			for (String value : searchData.district_name.values()) {
-				res_str = res_str + " " + value;
+			for (Object obj : searchData.districts.toArray()) {
+				District district = (District) obj;
+				res_str = res_str + " " + district.getTitle();
 			}
 			return res_str;
 		}
@@ -54,68 +55,71 @@ public class SearchModel {
 				return i;
 			}
 		}
-		return Settings.DEFAULT_CITY_ID;
+		return Consts.DEFAULT_CITY_ID;
 	}
 
 	public void setSelectionCity(long id) {
 		searchData.city_id = (int) id;
-		searchData.district_id.clear();
-		searchData.district_name.clear();
-		searchData.district_id.add(Settings.DEFAULT_DISTRICT_ID.get(0));
-		searchData.district_name.put(DEFAULT_DISTRICT_ID.get(0), a.getText(R.string.all).toString());
-		
+		searchData.districts.clear();
+		searchData.districts.add(Consts.getDefaultDistrict());
+
 	}
 
 	public void setSelectionDistrict(int id, int position, ListDistrictAdapter adapterDistrict) {
-		if (searchData.district_id.contains(id)) {
-			searchData.district_id.remove(searchData.district_id.indexOf(id));
-			searchData.district_name.remove(id);
+		Cursor district = (Cursor) adapterDistrict.getItem(position);
+		String title = district.getString(district.getColumnIndexOrThrow(DB.TABLE_DISTRICT_TITLE));
+		District choose_district = new District(title, id);
+		if (searchData.districts.contains(choose_district)) {
+			searchData.districts.remove(choose_district);
 		} else {
-			if (id == Settings.DEFAULT_DISTRICT_ID.get(0)) {
-				searchData.district_id.clear();
-				searchData.district_name.clear();
-			} else if (searchData.district_id.contains(Settings.DEFAULT_DISTRICT_ID.get(0))) {
-				searchData.district_id.remove(searchData.district_id.indexOf(Settings.DEFAULT_DISTRICT_ID.get(0)));
-				searchData.district_name.remove(Settings.DEFAULT_DISTRICT_ID.get(0));
+			if (id == Consts.DEFAULT_DISTRICT_ID) {
+				searchData.districts.clear();
+			} else if (searchData.districts.contains(Consts.getDefaultDistrict())) {
+				searchData.districts.remove(Consts.getDefaultDistrict());
 			}
-			searchData.district_id.add(id);
-			Cursor district = (Cursor) adapterDistrict.getItem(position);
-			searchData.district_name.put(id, district.getString(district.getColumnIndexOrThrow(DB.TABLE_DISTRICT_TITLE)));
-
+			searchData.districts.add(choose_district);
 		}
 	}
 
 	public Cursor getDistrictById() {
 		Cursor district = DB.getDistrictById(searchData.city_id);
-		MatrixCursor extras = new MatrixCursor(new String[]{"_id", "title"});
-		extras.addRow(new String[]{Settings.DEFAULT_DISTRICT_ID.get(0).toString(), a.getText(R.string.all).toString()});
-		extras.addRow(new String[]{"9999", a.getText(R.string.center).toString()});
+		MatrixCursor extras = new MatrixCursor(new String[]{DB.TABLE_DISTRICT_ID, DB.TABLE_DISTRICT_TITLE});
+		extras.addRow(new String[]{Consts.DEFAULT_DISTRICT_ID.toString(), a.getText(R.string.all).toString()});
+		extras.addRow(new String[]{Consts.DEFAULT_DISTRICT_ALL_ID.toString(), a.getText(R.string.center).toString()});
 		Cursor[] cursors = {extras, district};
 		district = new MergeCursor(cursors);
 		return district;
 	}
 
 	public Integer getPriceFrom() {
-		return Settings.PRICE_FROM;
+		return Consts.PRICE_FROM;
 	}
 
 	public Integer getPriceTo() {
-		return Settings.PRICE_TO;
+		return Consts.PRICE_TO;
 	}
 
 	public Integer[] getQuantityRoom() {
-		return Settings.DEFAULT_QuantityRoom;
+		return Consts.DEFAULT_QuantityRoom;
 	}
 
 	public Integer getQuantityRoom(int pos) {
-		return Settings.DEFAULT_QuantityRoom[pos];
+		return Consts.DEFAULT_QuantityRoom[pos];
 	}
 
 	public Integer[] getQuantityBeds() {
-		return Settings.DEFAULT_QuantityBeds;
+		return Consts.DEFAULT_QuantityBeds;
 	}
 
 	public Integer getQuantityBeds(int pos) {
-		return Settings.DEFAULT_QuantityBeds[pos];
+		return Consts.DEFAULT_QuantityBeds[pos];
+	}
+
+	public Cursor getFeatureAll() {
+		return DB.getFeatureAll();
+	}
+
+	public Cursor getAllCity() {
+		return DB.getAllCity();
 	}
 }
