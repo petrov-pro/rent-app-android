@@ -3,6 +3,8 @@
 			  android:id="@+id/feature_ll"
 			  android:layout_width="wrap_content"
 			  android:layout_height="wrap_content"
+			  android:paddingTop="10dp"
+			  android:paddingBottom="10dp"
 			  android:orientation="horizontal" >
 
 	<ImageView
@@ -16,9 +18,12 @@
 		android:src="@drawable/none" >
 	</ImageView>
 	<TextView
+		
 		android:id="@+id/title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:textSize="25dp"
+		android:gravity="center_vertical"
 		android:text=""
 	>
 	</TextView>

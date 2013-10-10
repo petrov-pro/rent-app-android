@@ -7,8 +7,10 @@ package ua.org.rent.controller;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TextView;
 import ua.org.rent.R;
 import ua.org.rent.adapters.ListDistrictAdapter;
 import ua.org.rent.adapters.ListFeatureAdapter;
+import ua.org.rent.entities.SearchData;
 import ua.org.rent.library.*;
 import ua.org.rent.models.SearchModel;
 import ua.org.rent.widgets.RangeSeekBar;
@@ -39,11 +43,13 @@ public class Search extends Activity {
 
 	private SearchModel searchModel;
 	private Button btDistrict;
+	private Button btFeature;
 	private boolean firstInit = true;
 	private TextView tRSfrom;
 	private TextView tRSto;
 	private Button btQR;
 	private Button btQB;
+	private TabActivity ta;
 
 	/**
 	 * Called when the activity is first created.
@@ -59,6 +65,8 @@ public class Search extends Activity {
 		btDistrict = (Button) findViewById(R.id.btD);
 		btDistrict.setText(searchModel.setTextOnButtonDistrict());
 
+		btFeature = (Button) findViewById(R.id.btF);
+		btFeature.setText(searchModel.setTextOnButtonFeature());
 		// spinner city
 		Cursor city = searchModel.getAllCity();
 		startManagingCursor(city);
@@ -93,6 +101,9 @@ public class Search extends Activity {
 		btQR = (Button) findViewById(R.id.btQR);
 		btQB = (Button) findViewById(R.id.btQB);
 		setRoomsBeds();
+		//set listen
+
+		ta = (TabActivity) Search.this.getParent();
 
 	}
 
@@ -217,11 +228,11 @@ public class Search extends Activity {
 			public void onItemClick(AdapterView<?> av, View v, int position,
 					long id) {
 				// do something on click
-				//searchModel.setSelectionDistrict((int) id, position, feature);
+				searchModel.setSelectionFeature((int) id, position, adapterFeature);
 				adapterFeature.notifyDataSetChanged();
 			}
 		});
-		
+
 		AlertDialog.Builder builderSingle = new AlertDialog.Builder(Search.this);
 		builderSingle.setTitle(getText(R.string.select_feature));
 		builderSingle.setView(lv);
@@ -229,11 +240,30 @@ public class Search extends Activity {
 				new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				btDistrict.setText(searchModel.setTextOnButtonDistrict());
+				btFeature.setText(searchModel.setTextOnButtonFeature());
 				dialog.dismiss();
 			}
 		});
 
 		builderSingle.show();
+	}
+
+	public void sendSearch(View v) {
+		ta.getTabHost().setCurrentTab(1);
+	}
+
+	private void setData() {
+		Intent intent = ta.getIntent();
+		intent.putExtra(SearchData.class.getCanonicalName(), searchModel.searchData);
+	}
+
+	protected void onPause() {
+		super.onPause();
+		setData();
+	}
+
+	protected void onStop() {
+		super.onStop();
+		setData();
 	}
 }

@@ -10,10 +10,11 @@ import android.database.MatrixCursor;
 import android.database.MergeCursor;
 import android.widget.SimpleCursorAdapter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import ua.org.rent.R;
 import ua.org.rent.adapters.ListDistrictAdapter;
+import ua.org.rent.adapters.ListFeatureAdapter;
 import ua.org.rent.entities.District;
+import ua.org.rent.entities.Feature;
 import ua.org.rent.library.DB;
 import ua.org.rent.settings.Consts;
 import ua.org.rent.entities.SearchData;
@@ -34,14 +35,36 @@ public class SearchModel {
 	}
 
 	public String setTextOnButtonDistrict() {
+		return getTextFromArray("district");
+	}
+
+	public String setTextOnButtonFeature() {
+		return getTextFromArray("feature");
+	}
+
+	private String getTextFromArray(String type) {
 		String res_str = "";
-		if (searchData.districts.isEmpty()) {
+		String title = "";
+		ArrayList arr;
+		if (type.equals("district")) {
+			arr = (ArrayList<District>) searchData.districts;
+		} else {
+			arr = (ArrayList<Feature>) searchData.features;
+		}
+		if (arr.isEmpty()) {
 			return a.getText(R.string.all).toString();
 		} else {
 
-			for (Object obj : searchData.districts.toArray()) {
-				District district = (District) obj;
-				res_str = res_str + " " + district.getTitle();
+			for (Object obj : arr.toArray()) {
+				if (type.equals("district")) {
+					District district = (District) obj;
+					title = district.getTitle();
+				} else {
+					Feature feature = (Feature) obj;
+					title = feature.getTitle();
+				}
+
+				res_str = res_str + " " + title;
 			}
 			return res_str;
 		}
@@ -80,6 +103,22 @@ public class SearchModel {
 			searchData.districts.add(choose_district);
 		}
 	}
+	
+	public void setSelectionFeature(int id, int position, ListFeatureAdapter adapterFeature) {
+		Cursor feature = (Cursor) adapterFeature.getItem(position);
+		String title = feature.getString(feature.getColumnIndexOrThrow(DB.TABLE_FEATURE_TITLE));
+		Feature choose_feature = new Feature(title, id);
+		if (searchData.features.contains(choose_feature)) {
+			searchData.features.remove(choose_feature);
+		} else {
+			if (id == Consts.DEFAULT_FEATURE_ID) {
+				searchData.features.clear();
+			} else if (searchData.features.contains(Consts.getDefaultFeature())) {
+				searchData.features.remove(Consts.getDefaultFeature());
+			}
+			searchData.features.add(choose_feature);
+		}
+	}
 
 	public Cursor getDistrictById() {
 		Cursor district = DB.getDistrictById(searchData.city_id);
@@ -116,7 +155,12 @@ public class SearchModel {
 	}
 
 	public Cursor getFeatureAll() {
-		return DB.getFeatureAll();
+		Cursor feature = DB.getFeatureAll();
+		MatrixCursor extras = new MatrixCursor(new String[]{DB.TABLE_FEATURE_ID, DB.TABLE_FEATURE_TITLE, DB.TABLE_FEATURE_ICO});
+		extras.addRow(new String[]{Consts.DEFAULT_FEATURE_ID.toString(), a.getText(R.string.all).toString(), a.getText(R.string.all).toString()});
+		Cursor[] cursors = {extras, feature};
+		feature = new MergeCursor(cursors);
+		return feature;
 	}
 
 	public Cursor getAllCity() {

@@ -22,6 +22,14 @@ public class SearchData implements Parcelable {
 	}
 
 	public void writeToParcel(Parcel out, int flags) {
+		out.writeInt(city_id);
+		out.writeString(city_name);
+		out.writeInt(countRoom);
+		out.writeInt(countBed);
+		out.writeInt(priceFrom);
+		out.writeInt(priceTo);
+		out.writeList(features);
+		out.writeList(districts);
 	}
 	public static final Parcelable.Creator<SearchData> CREATOR = new Parcelable.Creator<SearchData>() {
 		public SearchData createFromParcel(Parcel in) {
@@ -34,6 +42,14 @@ public class SearchData implements Parcelable {
 	};
 
 	private SearchData(Parcel in) {
+		city_id = in.readInt();
+		city_name = in.readString();
+		countRoom = in.readInt();
+		countBed = in.readInt();
+		priceFrom = in.readInt();
+		priceTo = in.readInt();
+		in.readList(features, null);
+		in.readList(districts, null);
 	}
 
 	public SearchData() {
