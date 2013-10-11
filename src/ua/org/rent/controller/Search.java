@@ -101,7 +101,7 @@ public class Search extends Activity {
 		btQR = (Button) findViewById(R.id.btQR);
 		btQB = (Button) findViewById(R.id.btQB);
 		setRoomsBeds();
-		//set listen
+
 
 		ta = (TabActivity) Search.this.getParent();
 
@@ -257,11 +257,13 @@ public class Search extends Activity {
 		intent.putExtra(SearchData.class.getCanonicalName(), searchModel.searchData);
 	}
 
+	@Override
 	protected void onPause() {
 		super.onPause();
 		setData();
 	}
 
+	@Override
 	protected void onStop() {
 		super.onStop();
 		setData();

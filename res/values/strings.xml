@@ -18,4 +18,7 @@
 	<string name="tRSto">до</string>
 	<string name="feature">Удобства</string>
 	<string name="center">В центре</string>
+	<string name="hasnt_connect">Нет соединение с сетью</string>
+	<string name="server_problem__connect">Сервер не отвечает</string>
+	<string name="json_parser_problem">Неправильный ответ от сервера (json)</string>
 </resources>

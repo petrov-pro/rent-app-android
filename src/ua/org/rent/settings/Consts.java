@@ -28,23 +28,23 @@ public class Consts extends Application {
 	public static Integer DEFAULT_DISTRICT_ID = 0;
 	public static Integer DEFAULT_FEATURE_ID = 0;
 
-	public static final String getDefaultCityName() {
+	public static  String getDefaultCityName() {
 		return DB.getCityById(DEFAULT_CITY_ID);
 	}
 
-	public static final String getDefaultDistrictName() {
+	public static  String getDefaultDistrictName() {
 		return RentAppState.getAppInstance().getApplicationContext().getText(R.string.all).toString();
 	}
 
-	public static final District getDefaultDistrict() {
+	public static  District getDefaultDistrict() {
 		return new District(getDefaultDistrictName(), DEFAULT_DISTRICT_ID);
 	}
 
-	public static final String getDefaultFeatureName() {
+	public static  String getDefaultFeatureName() {
 		return RentAppState.getAppInstance().getApplicationContext().getText(R.string.all).toString();
 	}
 
-	public static final Feature getDefaultFeature() {
+	public static  Feature getDefaultFeature() {
 		return new Feature(getDefaultFeatureName(), DEFAULT_FEATURE_ID);
 	}
 }
