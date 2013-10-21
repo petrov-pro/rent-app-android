@@ -1,152 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="fill_parent"
-			  android:layout_height="fill_parent"
-			  android:orientation="vertical" >
-    
-	<TextView  
-		android:layout_marginTop="@dimen/distance_elements_search"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content" 
-		android:text="@string/city"
-	/>
-    
-	<Spinner
-		android:id="@+id/city_list"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
-    
-	<TextView 
-		android:layout_marginTop="@dimen/distance_elements_search" 
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content" 
-		android:text="@string/district"
-	/>
-
-	<Button
-		android:id="@+id/btD"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:onClick="showListDistrict"
-		android:text="" />
-	
-	<RelativeLayout 
-		android:layout_marginTop="@dimen/distance_elements_search"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-	
-	
-		<TextView 
-			android:id="@+id/tQR" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			android:layout_alignParentLeft="true" 
-			android:text="@string/quantity_room"
-		/>
-		<Button
-			android:id="@+id/btQR"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_toRightOf="@id/tQR"
-			android:onClick="showQuantityRoom"
-			android:text="" />
-		<Button
-			android:id="@+id/btQB"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:onClick="showQuantityBeds"
-			android:layout_alignParentRight ="true"
-			android:text="" />
-	
-		<TextView  
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" 
-			android:text="@string/quantity_beds"
-			android:layout_toLeftOf="@id/btQB"
-			
-		/>
-		
-	</RelativeLayout>
-	
-	
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+			android:id="@+id/scroll" 
+			android:layout_width="fill_parent" 
+			android:layout_height="fill_parent">
 	<LinearLayout
-		android:layout_marginTop="@dimen/distance_elements_search"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal" >
-	
-		<TextView  
-			android:paddingRight="10dp"
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" 
-			android:text="@string/tRS"
-		/>
-		
-		<TextView  
-			android:paddingRight="10dp"
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" 
-			android:text="@string/tRSfrom"
-		/>
-		
-		<TextView
-			android:id="@+id/tRSfrom" 
-			android:layout_marginRight="5dp"
-			android:paddingRight="10dp" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:background="@drawable/back" 
-			android:text=""
-		/>
-		
-		<TextView  
-			android:paddingRight="10dp"
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" 
-			android:text="@string/tRSto"
-		/>
-		
-		<TextView
-			android:id="@+id/tRSto"
-			android:paddingRight="10dp"  
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:background="@drawable/back" 
-			android:text=""
-		/>
-		
-	</LinearLayout>
-	
-	<LinearLayout
-		android:id="@+id/lRS"
-		android:layout_marginTop="@dimen/distance_elements_search"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="fill_parent"
 		android:orientation="vertical" >
+    
+		<TextView  
+			android:layout_marginTop="@dimen/distance_elements_search"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="@string/city"
+		/>
+    
+		<Spinner
+			android:id="@+id/city_list"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+    
+		<TextView 
+			android:layout_marginTop="@dimen/distance_elements_search" 
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="@string/district"
+		/>
+
+		<Button
+			android:id="@+id/btD"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="showListDistrict"
+			android:text="" />
+	
+		<RelativeLayout 
+			android:layout_marginTop="@dimen/distance_elements_search"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+	
+	
+			<TextView 
+				android:id="@+id/tQR" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true" 
+				android:text="@string/quantity_room"
+			/>
+			<Button
+				android:id="@+id/btQR"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/tQR"
+				android:onClick="showQuantityRoom"
+				android:text="" />
+			<Button
+				android:id="@+id/btQB"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="showQuantityBeds"
+				android:layout_alignParentRight ="true"
+				android:text="" />
+	
+			<TextView  
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:text="@string/quantity_beds"
+				android:layout_toLeftOf="@id/btQB"
+			
+			/>
+		
+		</RelativeLayout>
+	
+	
+		<LinearLayout
+			android:layout_marginTop="@dimen/distance_elements_search"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" >
+	
+			<TextView  
+				android:paddingRight="10dp"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:text="@string/tRS"
+			/>
+		
+			<TextView  
+				android:paddingRight="10dp"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:text="@string/tRSfrom"
+			/>
+		
+			<TextView
+				android:id="@+id/tRSfrom" 
+				android:layout_marginRight="5dp"
+				android:paddingRight="10dp" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:background="@drawable/back" 
+				android:text=""
+			/>
+		
+			<TextView  
+				android:paddingRight="10dp"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:text="@string/tRSto"
+			/>
+		
+			<TextView
+				android:id="@+id/tRSto"
+				android:paddingRight="10dp"  
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:background="@drawable/back" 
+				android:text=""
+			/>
+		
+		</LinearLayout>
+	
+		<LinearLayout
+			android:id="@+id/lRS"
+			android:layout_marginTop="@dimen/distance_elements_search"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" >
+		</LinearLayout>
+	
+		<TextView  
+			android:layout_marginTop="@dimen/distance_elements_search"
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:text="@string/feature"
+		/>
+
+		<Button
+			android:id="@+id/btF"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="showListFeature"
+			android:text="" />
+	
+		<Button
+			android:layout_marginTop="@dimen/distance_elements_search"
+			android:layout_gravity="center"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="sendSearch"
+			android:text="@string/search" />
+
 	</LinearLayout>
-	
-	<TextView  
-		android:layout_marginTop="@dimen/distance_elements_search"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content" 
-		android:text="@string/feature"
-	/>
-
-	<Button
-		android:id="@+id/btF"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:onClick="showListFeature"
-		android:text="" />
-	
-	<Button
-		android:layout_marginTop="@dimen/distance_elements_search"
-		android:layout_gravity="center"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:onClick="sendSearch"
-		android:text="@string/search" />
-
-</LinearLayout>
+</ScrollView>

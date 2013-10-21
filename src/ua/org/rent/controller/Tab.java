@@ -35,7 +35,7 @@ public class Tab extends TabActivity {
 
 		tabSpec = tabHost.newTabSpec("history");
 		tabSpec.setIndicator(getString(R.string.history), getResources().getDrawable(R.drawable.tab_icon_history));
-		tabSpec.setContent(new Intent(this, Result.class));
+		tabSpec.setContent(new Intent(this, History.class));
 		tabHost.addTab(tabSpec);
 	}
 }

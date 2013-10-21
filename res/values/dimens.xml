@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<dimen name="distance_elements_search">15dp</dimen>
+	<dimen name="left_elements_result">10dp</dimen>
 </resources>
 

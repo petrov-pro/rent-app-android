@@ -27,6 +27,25 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_FEATURE_TITLE = "title";
 	public static final String TABLE_FEATURE_ID = "_id";
 	public static final String TABLE_FEATURE_ICO = "ico";
+	//aprtment
+	public static final String DB_TABLE_APARTMENT = "apartments";
+	public static final String TABLE_APARTMENT_ID=  "_id";
+	public static final String TABLE_APARTMENT_CITY_ID=  "city_id";
+	public static final String TABLE_APARTMENT_DISTRICT_ID = "district_id";
+	public static final String TABLE_APARTMENT_EXPIREDATE = "expiredate";
+	public static final String TABLE_APARTMENT_TITLE = "title";
+	public static final String TABLE_APARTMENT_BEDS = "beds";
+	public static final String TABLE_APARTMENT_ROOMS = "rooms";
+	public static final String TABLE_APARTMENT_STREET_ADDRESS = "street_address";
+	public static final String TABLE_APARTMENT_HOUSE_NUM = "house_num";
+	public static final String TABLE_APARTMENT_APT_NUM = "apt_num";
+	public static final String TABLE_APARTMENT_RATING = "rating";
+	public static final String TABLE_APARTMENT_PHONE_NUM = "phone_num";
+	public static final String TABLE_APARTMENT_CONTACT_NAME = "contact_name";
+	public static final String TABLE_APARTMENT_PRICE = "price";
+	public static final String TABLE_APARTMENT_DESCRIPTION = "description";
+	
+	
 	private static final int DATABASE_VERSION = 16;
 	private volatile static DB sInstance;
 	private final Context mContext;
@@ -181,12 +200,16 @@ public class DB extends SQLiteOpenHelper {
 
 	public static final String getCityById(Integer city_id) {
 		Cursor c = getDb().query(DB_TABLE_CITY, null, "_id = ?", new String[]{city_id.toString()}, null, null, null);
-		try {	
+		try {
 			c.moveToFirst();
 			return c.getString(c.getColumnIndexOrThrow(DB.TABLE_CITY_TITLE));
 		} finally {
 			c.close();
 		}
+	}
+
+	public static void deleteAll(String table) {
+		getDb().delete(table, null, null);
 	}
 }
 //sqlite3 /data/data/ua.org.rent/databases/rentapp.sqlite

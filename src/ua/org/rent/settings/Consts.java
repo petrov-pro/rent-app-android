@@ -1,5 +1,6 @@
 package ua.org.rent.settings;
 
+
 import android.app.Application;
 import ua.org.rent.R;
 import ua.org.rent.entities.District;
@@ -27,6 +28,28 @@ public class Consts extends Application {
 	public static String DEFAULT_DISTRICT_NAME = "";
 	public static Integer DEFAULT_DISTRICT_ID = 0;
 	public static Integer DEFAULT_FEATURE_ID = 0;
+	public static String DEFAULT_JSON_TAG_APARTMENT_LIST = "apartment_list";
+	
+	public static String DEFAULT_JSON_TAG_APARTMENT_CITY = "city";
+	public static String DEFAULT_JSON_TAG_APARTMENT_STREET_ADDRESS = "street_address";
+	public static String DEFAULT_JSON_TAG_APARTMENT_PRICE = "price";
+	public static String DEFAULT_JSON_TAG_APARTMENT_FEATURES_LIST = "features_list";
+	
+	public static String DEFAULT_JSON_TAG_APARTMENT_ID = "_id";
+	public static final String DEFAULT_JSON_TAG_CITY_ID=  "city_id";
+	public static final String DEFAULT_JSON_TAG_DISTRICT_ID = "district_id";
+	public static final String DEFAULT_JSON_TAG_EXPIREDATE = "expiredate";
+	public static final String DEFAULT_JSON_TAG_TITLE = "title";
+	public static final String DEFAULT_JSON_TAG_BEDS = "beds";
+	public static final String DEFAULT_JSON_TAG_ROOMS = "rooms";
+	public static final String DEFAULT_JSON_TAG_STREET_ADDRESS = "street_address";
+	public static final String DEFAULT_JSON_TAG_HOUSE_NUM = "house_num";
+	public static final String DEFAULT_JSON_TAG_APT_NUM = "apt_num";
+	public static final String DEFAULT_JSON_TAG_RATING = "rating";
+	public static final String DEFAULT_JSON_TAG_PHONE_NUM = "phone_num";
+	public static final String DEFAULT_JSON_TAG_CONTACT_NAME = "contact_name";
+	public static final String DEFAULT_JSON_TAG_PRICE = "price";
+	public static final String DEFAULT_JSON_TAG_DESCRIPTION = "description";
 
 	public static  String getDefaultCityName() {
 		return DB.getCityById(DEFAULT_CITY_ID);

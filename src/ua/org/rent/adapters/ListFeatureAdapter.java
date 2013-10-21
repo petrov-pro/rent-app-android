@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import ua.org.rent.R;
 import ua.org.rent.entities.Feature;
+import ua.org.rent.utils.Images;
 
 public class ListFeatureAdapter extends SimpleCursorAdapter {
 
@@ -52,7 +53,7 @@ public class ListFeatureAdapter extends SimpleCursorAdapter {
 			int feature_id = c.getInt(c.getColumnIndexOrThrow(DB.TABLE_FEATURE_ID));
 			TextView feature_title = (TextView) convertView.findViewById(to[0]);
 			ImageView feature_ico = (ImageView) convertView.findViewById(to[1]);
-			feature_ico.setImageBitmap(getBitmapFromAsset("feature/" + ico + ".png"));
+			feature_ico.setImageBitmap(Images.getBitmapFromAsset("feature/" + ico + ".png"));
 			LinearLayout feature_ll = (LinearLayout) convertView.findViewById(R.id.feature_ll);
 			feature_title.setText(title);
 
@@ -63,19 +64,5 @@ public class ListFeatureAdapter extends SimpleCursorAdapter {
 			}
 		}
 		return convertView;
-	}
-
-	public Bitmap getBitmapFromAsset(String strName) {
-
-		InputStream istr;
-		Bitmap bitmap = null;
-		try {
-			istr = am.open(strName);
-			bitmap = BitmapFactory.decodeStream(istr);
-		} catch (IOException e) {
-			return null;
-		}
-
-		return bitmap;
 	}
 }

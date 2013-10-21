@@ -21,4 +21,10 @@
 	<string name="hasnt_connect">Нет соединение с сетью</string>
 	<string name="server_problem__connect">Сервер не отвечает</string>
 	<string name="json_parser_problem">Неправильный ответ от сервера (json)</string>
+	<string name="json_bad_strucure">Не могу распарсить</string>
+	<string name="json_bad_strucure2">Ошибка в структуре джсон</string>
+	<string name="feature_list_empty">Пустой feature_list</string>
+	<string name="empty">Пусто</string>
+	<string name="unknow">Неизвестно</string>
+	<string name="json_bad_strucure3">Не хватает даных из джсона</string>
 </resources>
