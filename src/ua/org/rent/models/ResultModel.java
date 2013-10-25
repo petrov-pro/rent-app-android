@@ -4,7 +4,9 @@
  */
 package ua.org.rent.models;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.database.Cursor;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,47 +30,12 @@ public class ResultModel {
 	private String message = "";
 	private TaskPreperDate task;
 	private String response;
-	private boolean resultOperation = true;
+	private boolean resultOperation;
 	private JSONObject jresult;
 	private ArrayList<Apartment> apartamentList;
-
-	public ArrayList<Apartment> getApartamentList() {
-		return apartamentList;
-	}
-
-	private void prepareApartamentList(JSONArray apartamentList) {
-		this.apartamentList = new ArrayList<Apartment>();
-		DB.getDb().beginTransaction();
-		DB.deleteAll(DB.DB_TABLE_APARTMENT);
-		for (int i = 0; i < apartamentList.length(); i++) {
-			try {
-				JSONObject apartmentJ = (JSONObject) apartamentList.get(i);
-
-				Apartment apartmentT = new Apartment();
-				this.apartamentList.add(apartmentT);
-				ContentValues apartment = new ContentValues();
-				try {
-
-					apartment.put(DB.TABLE_APARTMENT_STREET_ADDRESS, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_APARTMENT_STREET_ADDRESS));
-					apartment.put(DB.TABLE_APARTMENT_CITY_ID, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_APARTMENT_CITY));
-					apartment.put(DB.TABLE_APARTMENT_PRICE, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_APARTMENT_PRICE));
-					apartment.put(DB.TABLE_APARTMENT_PHONE_NUM, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_PHONE_NUM));
-
-				} catch (JSONException e) {
-					message = RentAppState.getContext().getText(R.string.json_bad_strucure3).toString();
-					resultOperation = false;
-				}
-
-				DB.getDb().insert(DB.DB_TABLE_APARTMENT, null, apartment);
-
-			} catch (JSONException e) {
-				message = RentAppState.getContext().getText(R.string.json_bad_strucure2).toString();
-				resultOperation = false;
-			}
-		}
-		DB.getDb().setTransactionSuccessful();
-		DB.getDb().endTransaction();
-	}
+	public Cursor features;
+	public Cursor apartments;
+	
 
 	public JSONObject getJresult() {
 		return jresult;
@@ -82,9 +49,17 @@ public class ResultModel {
 		return message;
 	}
 
+	public boolean isResultOperation() {
+		return resultOperation;
+	}
+
+	public String getPhoneByPosition(int position) {
+		String phoneNum = apartments.getString(apartments.getColumnIndex(DB.TABLE_APARTMENT_PHONE_NUM));
+		return phoneNum.replaceAll("\\s+", "");
+	}
+
 	synchronized public void preparationAndProcessing() {
 		if (Http.hasConnection(RentAppState.getContext())) {
-			getResponseFromServer();
 			processingData();
 		} else {
 			message = RentAppState.getContext().getText(R.string.hasnt_connect).toString();
@@ -93,15 +68,8 @@ public class ResultModel {
 
 	}
 
-	public boolean isResultOperation() {
-		return resultOperation;
-	}
-
-	private void getResponseFromServer() {
-		response = Http.connect(Consts.HOST_API);
-	}
-
 	private void processingData() {
+		response = Http.connect(Consts.HOST_API);
 		if (response == null || response.isEmpty()) {
 			message = RentAppState.getContext().getText(R.string.server_problem__connect).toString();
 			resultOperation = false;
@@ -125,9 +93,62 @@ public class ResultModel {
 
 		}
 	}
+	
+	private void prepareApartamentList(JSONArray apartamentList) {
+		this.apartamentList = new ArrayList<Apartment>();
+		DB.getDb().beginTransaction();
+		DB.deleteAll(DB.DB_TABLE_APARTMENT);
+		DB.deleteAll(DB.DB_TABLE_FEATURES_APARTMENTS);
+		int apartment_id;
+		for (int i = 0; i < apartamentList.length(); i++) {
+			try {
+				JSONObject apartmentJ = (JSONObject) apartamentList.get(i);
 
-	public String getPhoneByPosition(int position) {
-		Apartment apartment = apartamentList.get(position);
-		return apartment.getPhoneNum().replaceAll("\\s+", "");
+				Apartment apartmentT = new Apartment();
+				this.apartamentList.add(apartmentT);
+				ContentValues apartment = new ContentValues();
+				try {
+					apartment_id = apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_APARTMENT_ID);
+					apartment.put(DB.TABLE_APARTMENT_ID, apartment_id);
+					apartment.put(DB.TABLE_APARTMENT_CITY_ID, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_CITY_ID));
+					apartment.put(DB.TABLE_APARTMENT_DISTRICT_ID, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_DISTRICT_ID));
+					apartment.put(DB.TABLE_APARTMENT_EXPIREDATE, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_EXPIREDATE));
+					apartment.put(DB.TABLE_APARTMENT_BEDS, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_BEDS));
+					apartment.put(DB.TABLE_APARTMENT_ROOMS, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_ROOMS));
+					apartment.put(DB.TABLE_APARTMENT_STREET_ADDRESS, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_STREET_ADDRESS));
+					apartment.put(DB.TABLE_APARTMENT_HOUSE_NUM, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_HOUSE_NUM));
+					apartment.put(DB.TABLE_APARTMENT_RATING, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_RATING));
+					apartment.put(DB.TABLE_APARTMENT_PHONE_NUM, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_PHONE_NUM));
+					apartment.put(DB.TABLE_APARTMENT_CONTACT_NAME, apartmentJ.getString(Consts.DEFAULT_JSON_TAG_CONTACT_NAME));
+					apartment.put(DB.TABLE_APARTMENT_PRICE, apartmentJ.getInt(Consts.DEFAULT_JSON_TAG_PRICE));
+					JSONArray fl = apartmentJ.getJSONArray(Consts.DEFAULT_JSON_TAG_APARTMENT_FEATURES_LIST);
+					for (int ii = 0; ii < fl.length(); ii++) {
+						int feature_id = (Integer) fl.get(ii);
+						ContentValues feature = new ContentValues();
+						feature.put(DB.TABLE_FEATURES_APARTMENTS_APARTMENT_ID, apartment_id);
+						feature.put(DB.TABLE_FEATURES_APARTMENTS_FEATURE_ID, feature_id);
+						DB.getDb().insert(DB.DB_TABLE_FEATURES_APARTMENTS, null, feature);
+					}
+
+				} catch (JSONException e) {
+					message = RentAppState.getContext().getText(R.string.json_bad_strucure3).toString();
+					resultOperation = false;
+				}
+
+				DB.getDb().insert(DB.DB_TABLE_APARTMENT, null, apartment);
+
+			} catch (JSONException e) {
+				message = RentAppState.getContext().getText(R.string.json_bad_strucure2).toString();
+				resultOperation = false;
+			}
+		}
+		DB.getDb().setTransactionSuccessful();
+		DB.getDb().endTransaction();
+		resultOperation = true;
+	}
+
+	public void getApartmentAndFeature() {
+		features = DB.getFeatureAll();
+		apartments = DB.getApartmentsAll();
 	}
 }

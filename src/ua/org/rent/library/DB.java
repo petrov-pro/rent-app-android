@@ -29,8 +29,8 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_FEATURE_ICO = "ico";
 	//aprtment
 	public static final String DB_TABLE_APARTMENT = "apartments";
-	public static final String TABLE_APARTMENT_ID=  "_id";
-	public static final String TABLE_APARTMENT_CITY_ID=  "city_id";
+	public static final String TABLE_APARTMENT_ID = "_id";
+	public static final String TABLE_APARTMENT_CITY_ID = "city_id";
 	public static final String TABLE_APARTMENT_DISTRICT_ID = "district_id";
 	public static final String TABLE_APARTMENT_EXPIREDATE = "expiredate";
 	public static final String TABLE_APARTMENT_TITLE = "title";
@@ -44,9 +44,12 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_APARTMENT_CONTACT_NAME = "contact_name";
 	public static final String TABLE_APARTMENT_PRICE = "price";
 	public static final String TABLE_APARTMENT_DESCRIPTION = "description";
-	
-	
-	private static final int DATABASE_VERSION = 16;
+	public static final String TABLE_APARTMENT_CITY_NAME = "city_name";
+	//features_apartments
+	public static final String DB_TABLE_FEATURES_APARTMENTS = "features_apartments";
+	public static final String TABLE_FEATURES_APARTMENTS_APARTMENT_ID = "apartment_id";
+	public static final String TABLE_FEATURES_APARTMENTS_FEATURE_ID = "feature_id";
+	private static final int DATABASE_VERSION = 17;
 	private volatile static DB sInstance;
 	private final Context mContext;
 	String[] items;
@@ -210,6 +213,11 @@ public class DB extends SQLiteOpenHelper {
 
 	public static void deleteAll(String table) {
 		getDb().delete(table, null, null);
+	}
+
+	public static Cursor getApartmentsAll() {
+		String query = "SELECT apartments.*, cities.title as " + TABLE_APARTMENT_CITY_NAME + " FROM apartments, cities, districts WHERE apartments.city_id = cities._id and  apartments.district_id = districts._id";
+		return getDb().rawQuery(query, null);
 	}
 }
 //sqlite3 /data/data/ua.org.rent/databases/rentapp.sqlite

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.TabActivity;
 import android.view.View.OnClickListener;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import ua.org.rent.R;
 import ua.org.rent.adapters.ListApartmentAdapter;
 import ua.org.rent.entities.Apartment;
 import ua.org.rent.entities.SearchData;
+import ua.org.rent.library.DB;
 import ua.org.rent.models.ResultModel;
 import ua.org.rent.utils.CProgressBar;
 import ua.org.rent.utils.PhoneCall;
@@ -80,13 +82,15 @@ public class Result extends Activity implements OnClickListener {
 			TextView txtError = (TextView) findViewById(R.id.result_message);
 			txtError.setText(resultModel.getMessage());
 		} else {
-			ListApartmentAdapter t = new ListApartmentAdapter(this, resultModel.getApartamentList());
+			resultModel.getApartmentAndFeature();	
+			startManagingCursor(resultModel.features);
+			startManagingCursor(resultModel.apartments);
+			ListApartmentAdapter t = new ListApartmentAdapter(this, R.layout.apartament_item, resultModel.apartments, new String[]{}, new int[]{}, resultModel.features);
 			ListView result_list = (ListView) findViewById(R.id.result_list);
 			result_list.setAdapter(t);
 			result_list.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onItemClick(AdapterView<?> a, View view, int position, long id) {
-					Apartment apartment = (Apartment) a.getItemAtPosition(position);
+				public void onItemClick(AdapterView<?> a, View view, int position, long id) {		
 
 				}
 			});

@@ -3,8 +3,8 @@
 
 	<string-array name="START_DATA">
 		<item><![CDATA[
-            INSERT INTO cities (title,latitude,longitude,radius,description)
-VALUES (\'Киев\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
+            INSERT INTO cities (_id,title,latitude,longitude,radius,description)
+VALUES (5,\'Киев\',1,1,1,\'Город-герой, троешина рулит братва за спиной\');
 ]]></item>
 		<item><![CDATA[
             INSERT INTO cities (title,latitude,longitude,radius,description)
@@ -52,12 +52,16 @@ VALUES (\'Рио\',1,1,1,\'Город-герой, троешина рулит б
 ]]></item>
 
 		<item><![CDATA[
-            INSERT INTO districts (city_id,title,is_center,description)
-VALUES (1,\'Лесной\',0,\'Лесной райончик\');
+            INSERT INTO districts (_id,city_id,title,is_center,description)
+VALUES (25,5,\'Лесной\',0,\'Лесной райончик\');
 ]]></item>
 		<item><![CDATA[
-            INSERT INTO districts (city_id,title,is_center,description)
-VALUES (1,\'Троешина\',0,\'Четкий райончик\');
+            INSERT INTO districts (_id,city_id,title,is_center,description)
+VALUES (26,5,\'Троешина\',0,\'Четкий райончик\');
+]]></item>
+		<item><![CDATA[
+            INSERT INTO districts (_id,city_id,title,is_center,description)
+VALUES (30,5,\'Подол\',0,\'Центровой райончик\');
 ]]></item>
 
 		<item><![CDATA[

@@ -17,7 +17,7 @@ public class Consts extends Application {
 	public static final String URL_LOCAL_LOG = "http://192.168.0.102";
 	//valid url
 	public static final String HOST_API = "http://pos.bth.in.ua/rent/";
-	public final static Integer DEFAULT_CITY_ID = 1;
+	public final static Integer DEFAULT_CITY_ID = 5;
 	public final static Integer DEFAULT_DISTRICT_ALL_ID = 9999;
 	public static Integer PRICE_FROM = 0;
 	public static Integer PRICE_TO = 1000;
@@ -30,9 +30,7 @@ public class Consts extends Application {
 	public static Integer DEFAULT_FEATURE_ID = 0;
 	public static String DEFAULT_JSON_TAG_APARTMENT_LIST = "apartment_list";
 	
-	public static String DEFAULT_JSON_TAG_APARTMENT_CITY = "city";
-	public static String DEFAULT_JSON_TAG_APARTMENT_STREET_ADDRESS = "street_address";
-	public static String DEFAULT_JSON_TAG_APARTMENT_PRICE = "price";
+
 	public static String DEFAULT_JSON_TAG_APARTMENT_FEATURES_LIST = "features_list";
 	
 	public static String DEFAULT_JSON_TAG_APARTMENT_ID = "_id";
