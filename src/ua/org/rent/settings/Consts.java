@@ -48,6 +48,9 @@ public class Consts extends Application {
 	public static final String DEFAULT_JSON_TAG_CONTACT_NAME = "contact_name";
 	public static final String DEFAULT_JSON_TAG_PRICE = "price";
 	public static final String DEFAULT_JSON_TAG_DESCRIPTION = "description";
+        
+        public static final String CALL_MAKED = "apartments_id_who_call";
+        public static final String PREF_NAME = "c_m";
 
 	public static  String getDefaultCityName() {
 		return DB.getCityById(DEFAULT_CITY_ID);
