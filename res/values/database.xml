@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="TABLES">
-        <item><![CDATA[
+	<string-array name="TABLES">
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "cities" (
-       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "_id"                INTEGER NOT NULL PRIMARY KEY,
        "title"				CHAR(50) NOT NULL DEFAULT \'xxx\',
        "latitude"           DECIMAL(10,5) NOT NULL DEFAULT 0,
        "longitude"          DECIMAL(10,5) NOT NULL DEFAULT 0,
@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS "cities" (
 ]]></item>
 
 
-        <item><![CDATA[
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "districts" (
-       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "_id"                INTEGER NOT NULL PRIMARY KEY,
        "city_id"         	INTEGER NOT NULL DEFAULT 0,
        "title"				CHAR(50) NOT NULL DEFAULT \'xxx\',
        "is_center"          BOOLEAN NOT NULL DEFAULT 0,
@@ -23,15 +23,15 @@ CREATE TABLE IF NOT EXISTS "districts" (
        );
 ]]></item>
 
-        <item><![CDATA[
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "features_list" (
-       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "_id"                INTEGER NOT NULL PRIMARY KEY,
        "title"				CHAR(50) NOT NULL DEFAULT \'удобства\',
        "ico"				CHAR(50) NOT NULL DEFAULT \'default_ico\'
        );
 ]]></item>
 
-        <item><![CDATA[
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "features_apartments" (
        "_id"                        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "apartment_id"			    INTEGER NOT NULL DEFAULT 0,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS "features_apartments" (
 ]]></item>
 
 
-        <item><![CDATA[
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "comments" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "device_id"				CHAR(50) NOT NULL DEFAULT \'device_id\',
@@ -54,9 +54,9 @@ CREATE TABLE IF NOT EXISTS "comments" (
 
 
 
-        <item><![CDATA[
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "apartments" (
-       "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+       "_id"                INTEGER NOT NULL PRIMARY KEY ,
        "city_id"				INTEGER NOT NULL DEFAULT 0,
        "district_id"			INTEGER NOT NULL DEFAULT 0,
        "expiredate"				DATE,
@@ -75,20 +75,18 @@ CREATE TABLE IF NOT EXISTS "apartments" (
 ]]></item>
 
 
-        <item><![CDATA[
+		<item><![CDATA[
 CREATE TABLE IF NOT EXISTS "call_history" (
        "_id"                INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
        "apartment_id"			INTEGER NOT NULL DEFAULT 0,
-       "phone_num"				CHAR(50) NOT NULL DEFAULT \'\',
-       "contact_name"			CHAR(50) NOT NULL DEFAULT \'\',
        "calltime"				DATETIME,
        "comment"				TEXT,
        "rating"			        INTEGER NOT NULL DEFAULT 0,
        "is_sent"				BOOLEAN DEFAULT 0,
-        "is_positive"                      BOOLEAN
+       "is_positive"            BOOLEAN
        );
 
 ]]></item>
 
-    </string-array>
+	</string-array>
 </resources>

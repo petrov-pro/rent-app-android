@@ -1,6 +1,5 @@
 package ua.org.rent.settings;
 
-
 import android.app.Application;
 import ua.org.rent.R;
 import ua.org.rent.entities.District;
@@ -29,12 +28,9 @@ public class Consts extends Application {
 	public static Integer DEFAULT_DISTRICT_ID = 0;
 	public static Integer DEFAULT_FEATURE_ID = 0;
 	public static String DEFAULT_JSON_TAG_APARTMENT_LIST = "apartment_list";
-	
-
 	public static String DEFAULT_JSON_TAG_APARTMENT_FEATURES_LIST = "features_list";
-	
 	public static String DEFAULT_JSON_TAG_APARTMENT_ID = "_id";
-	public static final String DEFAULT_JSON_TAG_CITY_ID=  "city_id";
+	public static final String DEFAULT_JSON_TAG_CITY_ID = "city_id";
 	public static final String DEFAULT_JSON_TAG_DISTRICT_ID = "district_id";
 	public static final String DEFAULT_JSON_TAG_EXPIREDATE = "expiredate";
 	public static final String DEFAULT_JSON_TAG_TITLE = "title";
@@ -48,27 +44,30 @@ public class Consts extends Application {
 	public static final String DEFAULT_JSON_TAG_CONTACT_NAME = "contact_name";
 	public static final String DEFAULT_JSON_TAG_PRICE = "price";
 	public static final String DEFAULT_JSON_TAG_DESCRIPTION = "description";
-        
-        public static final String CALL_MAKED = "apartments_id_who_call";
-        public static final String PREF_NAME = "c_m";
-
-	public static  String getDefaultCityName() {
+	public static final String CALL_MAKED = "apartments_id_who_call";
+	public static final String PREF_NAME = "c_m";
+	public static final String TAG_CALL = "call";
+	public static final String TAG_MINI = "mini";
+	public static final String TAG_AT = "at";
+	
+	
+	public static String getDefaultCityName() {
 		return DB.getCityById(DEFAULT_CITY_ID);
 	}
 
-	public static  String getDefaultDistrictName() {
+	public static String getDefaultDistrictName() {
 		return RentAppState.getAppInstance().getApplicationContext().getText(R.string.all).toString();
 	}
 
-	public static  District getDefaultDistrict() {
+	public static District getDefaultDistrict() {
 		return new District(getDefaultDistrictName(), DEFAULT_DISTRICT_ID);
 	}
 
-	public static  String getDefaultFeatureName() {
+	public static String getDefaultFeatureName() {
 		return RentAppState.getAppInstance().getApplicationContext().getText(R.string.all).toString();
 	}
 
-	public static  Feature getDefaultFeature() {
+	public static Feature getDefaultFeature() {
 		return new Feature(getDefaultFeatureName(), DEFAULT_FEATURE_ID);
 	}
 }

@@ -1,8 +1,8 @@
 package ua.org.rent.library;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -45,11 +45,18 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_APARTMENT_PRICE = "price";
 	public static final String TABLE_APARTMENT_DESCRIPTION = "description";
 	public static final String TABLE_APARTMENT_CITY_NAME = "city_name";
+	public static final String TABLE_APARTMENT_FL = "fl";
 	//features_apartments
 	public static final String DB_TABLE_FEATURES_APARTMENTS = "features_apartments";
 	public static final String TABLE_FEATURES_APARTMENTS_APARTMENT_ID = "apartment_id";
 	public static final String TABLE_FEATURES_APARTMENTS_FEATURE_ID = "feature_id";
-	private static final int DATABASE_VERSION = 17;
+	//call history
+	public static final String DB_TABLE_CALL_HISTORY = "call_history";
+	public static final String TABLE_CALL_HISTORY_APARTMENT_ID = "apartment_id";
+	public static final String TABLE_CALL_HISTORY_IS_POSITIVE = "is_positive";
+	public static final String TABLE_CALL_HISTORY_ID = "_id";
+	public static final String TABLE_CALL_HISTORY_ID_ALIAS = "history_id";
+	private static final int DATABASE_VERSION = 21;
 	private volatile static DB sInstance;
 	private final Context mContext;
 	String[] items;
@@ -216,8 +223,18 @@ public class DB extends SQLiteOpenHelper {
 	}
 
 	public static Cursor getApartmentsAll() {
-		String query = "SELECT apartments.*, cities.title as " + TABLE_APARTMENT_CITY_NAME + " FROM apartments, cities, districts WHERE apartments.city_id = cities._id and  apartments.district_id = districts._id";
+		String query = "SELECT apartments.*, cities.title as " + TABLE_APARTMENT_CITY_NAME + ", call_history._id as history_id, call_history.is_positive, "
+				+ "(SELECT GROUP_CONCAT(fl.ico) FROM features_apartments as fa, features_list as fl WHERE fa.apartment_id = apartments._id and fa.feature_id = fl._id) as " + DB.TABLE_APARTMENT_FL + "  "
+				+ "FROM apartments, cities, districts "
+				+ "LEFT JOIN call_history ON apartments._id = call_history.apartment_id "
+				+ "WHERE apartments.city_id = cities._id and  apartments.district_id = districts._id ORDER BY apartments._id;";
 		return getDb().rawQuery(query, null);
+	}
+
+	public static void deleteAllApartment() {
+		getDb().delete(DB_TABLE_FEATURES_APARTMENTS, DB_TABLE_FEATURES_APARTMENTS + "._id NOT IN (SELECT _id FROM " + DB_TABLE_CALL_HISTORY + " as ch)", null);
+		getDb().delete(DB_TABLE_APARTMENT, DB_TABLE_APARTMENT + "._id NOT IN (SELECT _id FROM " + DB_TABLE_CALL_HISTORY + " as ch)", null);
 	}
 }
 //sqlite3 /data/data/ua.org.rent/databases/rentapp.sqlite
+//SELECT apartments.*, cities.title as title, call_history._id as history_id, call_history.is_positive FROM apartments, cities, districts LEFT JOIN call_history ON apartments._id = call_history.apartment_id WHERE apartments.city_id = cities._id and  apartments.district_id = districts._id ORDER BY apartments._id;
