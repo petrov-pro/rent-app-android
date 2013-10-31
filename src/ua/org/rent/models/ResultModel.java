@@ -8,13 +8,17 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
-import android.util.Log;
 import java.util.ArrayList;
+import java.util.List;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import ua.org.rent.R;
 import ua.org.rent.entities.Apartment;
+import ua.org.rent.entities.District;
+import ua.org.rent.entities.Feature;
 import ua.org.rent.entities.SearchData;
 import ua.org.rent.library.DB;
 import ua.org.rent.settings.Consts;
@@ -100,7 +104,24 @@ public class ResultModel {
 	}
 
 	private void processingData() {
-		response = Http.connect(Consts.HOST_API);
+
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_CITY_ID, searchData.city_id.toString()));
+		for (int i = 0; i < searchData.districts.size(); i++) {
+			District district = searchData.districts.get(i);
+			nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_DISTRICTS + "[]", district.getId().toString()));
+		}
+
+		for (int i = 0; i < searchData.features.size(); i++) {
+			Feature feature = searchData.features.get(i);
+			nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_FEATURES + "[]", feature.getId().toString()));
+		}
+		nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_COUNTROOM, searchData.countRoom.toString()));
+		nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_COUNTBED, searchData.countBed.toString()));
+		nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_PRICEFROM, searchData.priceFrom.toString()));
+		nameValuePairs.add(new BasicNameValuePair(Consts.DEFAULT_RESPONSE_TAG_PRICETO, searchData.priceTo.toString()));
+
+		response = Http.postData(Consts.HOST_API, nameValuePairs);
 		if (response == null || response.isEmpty()) {
 			message = RentAppState.getContext().getText(R.string.server_problem__connect).toString();
 			resultOperation = false;
@@ -202,9 +223,9 @@ public class ResultModel {
 		}
 
 		apartments = DB.getApartmentsAll();
-		
+
 		writeSprefAprtmentId(0);
 		apartmentIdFromCall = 0;
-		
+
 	}
 }

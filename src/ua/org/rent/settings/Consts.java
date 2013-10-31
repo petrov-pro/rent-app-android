@@ -50,6 +50,14 @@ public class Consts extends Application {
 	public static final String TAG_MINI = "mini";
 	public static final String TAG_AT = "at";
 	
+	public static final String DEFAULT_RESPONSE_TAG_CITY_ID = "city_id";
+	public static final String DEFAULT_RESPONSE_TAG_DISTRICTS = "districts";
+	public static final String DEFAULT_RESPONSE_TAG_FEATURES = "features";
+	public static final String DEFAULT_RESPONSE_TAG_COUNTROOM = "countRoom";
+	public static final String DEFAULT_RESPONSE_TAG_COUNTBED = "countBed";
+	public static final String DEFAULT_RESPONSE_TAG_PRICEFROM = "priceFrom";
+	public static final String DEFAULT_RESPONSE_TAG_PRICETO = "priceTo";
+	
 	
 	public static String getDefaultCityName() {
 		return DB.getCityById(DEFAULT_CITY_ID);

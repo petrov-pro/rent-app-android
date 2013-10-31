@@ -3,9 +3,9 @@
 			  android:layout_width="fill_parent"
 			  android:layout_height="fill_parent"
 			  android:orientation="vertical" >
-	<ListView
-		android:id="@+id/result_list"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-	/>
+	<ua.org.rent.widgets.PullToRefreshListView
+    android:id="@+id/result_list"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    />
 </LinearLayout>

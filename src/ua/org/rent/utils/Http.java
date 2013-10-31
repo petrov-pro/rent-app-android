@@ -16,13 +16,11 @@ import java.io.IOException;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
 
 /**
  *
@@ -30,18 +28,49 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public final class Http {
 
-	public static String connect(String url) {
+	public static String postData(String url, List<NameValuePair> nameValuePairs) {
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost(url);
+		try {
+			// Add your data
 
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			// Execute HTTP Post Request
+			HttpResponse response = httpclient.execute(httppost);
+			return connectHandler(response);
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+
+	}
+
+	public static String getData(String url) {
 		HttpClient httpclient = new DefaultHttpClient();
 
 		// Prepare a request object
 		HttpGet httpget = new HttpGet(url);
-
-		// Execute the request
-		HttpResponse response;
 		try {
-			response = httpclient.execute(httpget);
-			// Examine the response status
+			// Execute the request
+			HttpResponse response = httpclient.execute(httpget);
+			return connectHandler(response);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
+
+	private static String connectHandler(HttpResponse response) {
+
+		try {
 
 			// Get hold of the response entity
 			HttpEntity entity = response.getEntity();
@@ -108,27 +137,5 @@ public final class Http {
 			return true;
 		}
 		return false;
-	}
-
-	public void postData() {
-		// Create a new HttpClient and Post Header
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://www.yoursite.com/script.php");
-
-		try {
-			// Add your data
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-			nameValuePairs.add(new BasicNameValuePair("stringdata", "Hi"));
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-			// Execute HTTP Post Request
-			HttpResponse response = httpclient.execute(httppost);
-
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-		}
 	}
 }
