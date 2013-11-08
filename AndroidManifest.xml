@@ -30,6 +30,11 @@
 			android:name=".controller.Result"
 			android:label="@string/app_name" >
 		</activity>
+		<activity
+			android:launchMode="singleTop"
+			android:name=".controller.Detail"
+			android:label="@string/app_name" >
+		</activity>
 		
 	</application>
 	<uses-permission android:name="android.permission.INTERNET" />

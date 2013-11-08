@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.http.NameValuePair;
@@ -45,6 +46,29 @@ public class ResultModel {
 	public int apartmentIdFromCall = 0;
 	private int indexM;
 	private int topM;
+	private int pag = 0;
+
+	public SearchData getSearchData() {
+		return searchData;
+	}
+
+	public void setSearchData(SearchData searchData) {
+		this.searchData = searchData;
+	}
+	
+
+	public TaskPreperDate getTask() {
+		return task;
+	}
+
+	public void setTask(TaskPreperDate task) {
+		this.task = task;
+	}
+	
+
+	public int getPag() {
+		return pag;
+	}
 
 	public int getIndexM() {
 		return indexM;
@@ -149,7 +173,17 @@ public class ResultModel {
 	private void prepareApartamentList(JSONArray apartamentList) {
 		this.apartamentList = new ArrayList<Apartment>();
 		DB.getDb().beginTransaction();
-		DB.deleteAllApartment();
+		byte[] digest_r = null;
+		try {
+			MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+			digest.update(searchData.toString().getBytes());
+			digest_r = digest.digest();
+
+		} catch (Exception e) {
+			message = RentAppState.getContext().getText(R.string.json_bad_strucure).toString();
+			resultOperation = false;
+		}
+		DB.deleteAllApartment(digest_r.toString());
 		int apartment_id;
 		for (int i = 0; i < apartamentList.length(); i++) {
 			try {
@@ -185,7 +219,7 @@ public class ResultModel {
 					message = RentAppState.getContext().getText(R.string.json_bad_strucure3).toString();
 					resultOperation = false;
 				}
-
+				apartment.put(DB.TABLE_APARTMENT_HASH, digest_r.toString());
 				DB.getDb().insert(DB.DB_TABLE_APARTMENT, null, apartment);
 
 			} catch (JSONException e) {

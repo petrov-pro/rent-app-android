@@ -31,6 +31,7 @@ public class RentAppState extends Application {
 	private static RentAppState sInstance;
 	private static Context mContext;
 
+
 	public static RentAppState getAppInstance() {
 		if (sInstance == null) {
 			throw new RuntimeException("The application has not been initialized.");

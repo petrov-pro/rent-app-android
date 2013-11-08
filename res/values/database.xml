@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS "apartments" (
        "phone_num"				CHAR(50) NOT NULL DEFAULT \'\',
        "contact_name"			CHAR(50) NOT NULL DEFAULT \'\',
        "price"			        DECIMAL(10,5) NOT NULL DEFAULT 0,
-       "description"			TEXT
+       "description"			TEXT,
+	   "hash"					TEXT
        );
 ]]></item>
 

@@ -46,6 +46,7 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_APARTMENT_DESCRIPTION = "description";
 	public static final String TABLE_APARTMENT_CITY_NAME = "city_name";
 	public static final String TABLE_APARTMENT_FL = "fl";
+	public static final String TABLE_APARTMENT_HASH = "hash";
 	//features_apartments
 	public static final String DB_TABLE_FEATURES_APARTMENTS = "features_apartments";
 	public static final String TABLE_FEATURES_APARTMENTS_APARTMENT_ID = "apartment_id";
@@ -56,7 +57,7 @@ public class DB extends SQLiteOpenHelper {
 	public static final String TABLE_CALL_HISTORY_IS_POSITIVE = "is_positive";
 	public static final String TABLE_CALL_HISTORY_ID = "_id";
 	public static final String TABLE_CALL_HISTORY_ID_ALIAS = "history_id";
-	private static final int DATABASE_VERSION = 21;
+	private static final int DATABASE_VERSION = 24;
 	private volatile static DB sInstance;
 	private final Context mContext;
 	String[] items;
@@ -140,33 +141,6 @@ public class DB extends SQLiteOpenHelper {
 		}
 	}
 
-	public static void removeDeliveredEvents() {
-
-		if (1 == 1) {
-			return;
-		}
-		/*
-		 * Cursor cursor = DB.getDb().query(Event.TABLE_NAME, new
-		 * String[]{"max (timestamp)"}, "is_delivered = 1 AND type = ?", new
-		 * String[]{String.valueOf(Const.BOX_BOLUS)}, null, null, null);
-		 * Log.d("Cleaning delivered items","type "+Event.TABLE_NAME);
-		 * if(cursor.moveToFirst()) { long maxtTimestamp = cursor.getLong(0);
-		 * if(maxtTimestamp > 0) DB.getDb().delete("event",
-		 * "is_delivered = 1 AND timestamp <= ? AND type <> ? ", new
-		 * String[]{String
-		 * .valueOf(maxtTimestamp),String.valueOf(Const.BOX_BOLUS)}); long
-		 * bolusMaxTmp = System.currentTimeMillis() -
-		 * Format.hoursToMilliseconds(
-		 * Settings.get().getSyncSettings().getUserProfile
-		 * ().getInt(UserValues.ai_time)) - Format.hoursToMilliseconds(3);
-		 * DB.getDb().delete("event",
-		 * "is_delivered = 1 AND type = ? AND timestamp < ?", new
-		 * String[]{String.valueOf(Const.BOX_BOLUS),
-		 * String.valueOf(bolusMaxTmp)}); }
-		 * 
-		 * cursor.close();
-		 */
-	}
 
 	public static final int getInt(final String sql, int columnIndex) {
 		final Cursor c = getDb().rawQuery(sql, null);
@@ -231,10 +205,13 @@ public class DB extends SQLiteOpenHelper {
 		return getDb().rawQuery(query, null);
 	}
 
-	public static void deleteAllApartment() {
-		getDb().delete(DB_TABLE_FEATURES_APARTMENTS, DB_TABLE_FEATURES_APARTMENTS + "._id NOT IN (SELECT _id FROM " + DB_TABLE_CALL_HISTORY + " as ch)", null);
-		getDb().delete(DB_TABLE_APARTMENT, DB_TABLE_APARTMENT + "._id NOT IN (SELECT _id FROM " + DB_TABLE_CALL_HISTORY + " as ch)", null);
+	public static void deleteAllApartment(String hash) {
+		getDb().delete(DB_TABLE_FEATURES_APARTMENTS, DB_TABLE_FEATURES_APARTMENTS + "._id NOT IN (SELECT _id FROM " + DB_TABLE_CALL_HISTORY + " as ch) AND "
+				+ DB_TABLE_FEATURES_APARTMENTS + "._id != ? ", new String[]{hash});
+		getDb().delete(DB_TABLE_APARTMENT, DB_TABLE_APARTMENT + "._id NOT IN (SELECT _id FROM " + DB_TABLE_CALL_HISTORY + " as ch) AND "
+				+ DB_TABLE_APARTMENT + "._id != ? ", new String[]{hash});
 	}
 }
 //sqlite3 /data/data/ua.org.rent/databases/rentapp.sqlite
 //SELECT apartments.*, cities.title as title, call_history._id as history_id, call_history.is_positive FROM apartments, cities, districts LEFT JOIN call_history ON apartments._id = call_history.apartment_id WHERE apartments.city_id = cities._id and  apartments.district_id = districts._id ORDER BY apartments._id;
+//SELECT * FROM apartments;

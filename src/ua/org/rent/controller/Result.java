@@ -14,10 +14,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import ua.org.rent.R;
@@ -28,6 +29,8 @@ import ua.org.rent.settings.Consts;
 import ua.org.rent.utils.CProgressBar;
 import ua.org.rent.utils.PhoneCall;
 import ua.org.rent.utils.TaskPreperDate;
+import ua.org.rent.widgets.PullToRefreshListView;
+import ua.org.rent.widgets.PullToRefreshListView.OnRefreshListener;
 
 /**
  *
@@ -37,7 +40,7 @@ public class Result extends Activity implements OnClickListener {
 
 	private TabActivity ta;
 	private ResultModel resultModel;
-	private ListView result_list;
+	private PullToRefreshListView result_list;
 	private ListApartmentAdapter t;
 
 	/**
@@ -54,16 +57,69 @@ public class Result extends Activity implements OnClickListener {
 		if (resultModel == null) {
 			resultModel = new ResultModel(searchData);
 		}
-		TaskPreperDate t = new TaskPreperDate(this);
 
-		String statusTask = t.getStatus().toString();
-		if (statusTask.equals("RUNNING")) {
+
+		if (resultModel.getTask() != null && resultModel.getTask().getStatus().toString().equals("RUNNING")) {
 			CProgressBar.finish();
-			CProgressBar.onCreateDialog(1, this);
+			CProgressBar.onCreateDialog(1, Result.this);
 			CProgressBar.setProgress();
 		} else {
-			t.execute();
+			resultModel.setTask(new TaskPreperDate(this));
+			resultModel.getTask().execute();
 		}
+
+
+		result_list = (PullToRefreshListView) findViewById(R.id.result_list);
+		resultModel.getApartmentAndFeature();
+		startManagingCursor(resultModel.features);
+		startManagingCursor(resultModel.apartments);
+		t = new ListApartmentAdapter(this, R.layout.apartament_item, resultModel.apartments, new String[]{}, new int[]{}, resultModel);
+		result_list.setAdapter(t);
+
+		result_list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> a, View view, int position, long id) {
+				Intent intent = new Intent(Result.this, Detail.class);
+				//intent.putExtra(SearchData.class.getCanonicalName(), resultModel.getSearchData());
+				startActivity(intent);
+			}
+		});
+
+		result_list.setOnRefreshListener(new OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				// Do work to refresh the list here.
+				if (resultModel.getTask() != null && resultModel.getTask().getStatus().toString().equals("RUNNING")) {
+					CProgressBar.finish();
+					CProgressBar.onCreateDialog(1, Result.this);
+					CProgressBar.setProgress();
+				} else {
+					resultModel.setTask(new TaskPreperDate(Result.this));
+					resultModel.getTask().execute();
+				}
+			}
+		});
+
+		result_list.setOnScrollListener(new OnScrollListener() {
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0) {
+					if (resultModel.getTask() != null && (resultModel.getTask().getStatus().toString().equals("RUNNING") || resultModel.getTask().getStatus().toString().equals("PENDING"))) {
+						CProgressBar.finish();
+						CProgressBar.onCreateDialog(1, Result.this);
+						CProgressBar.setProgress();
+					} else {
+						resultModel.setTask(new TaskPreperDate(Result.this));
+						resultModel.getTask().execute();
+					}
+				}
+			}
+		});
+
 	}
 
 	@Override
@@ -83,22 +139,14 @@ public class Result extends Activity implements OnClickListener {
 
 	public void onPostExecute() {
 		CProgressBar.finishProgress();
+		result_list.onRefreshComplete();
 		if (!resultModel.isResultOperation()) {
 			setContentView(R.layout.result_error);
 			TextView txtError = (TextView) findViewById(R.id.result_message);
 			txtError.setText(resultModel.getMessage());
 		} else {
-			resultModel.getApartmentAndFeature();
-			startManagingCursor(resultModel.features);
-			startManagingCursor(resultModel.apartments);
-			t = new ListApartmentAdapter(this, R.layout.apartament_item, resultModel.apartments, new String[]{}, new int[]{}, resultModel);
-			result_list = (ListView) findViewById(R.id.result_list);
-			result_list.setAdapter(t);
-			result_list.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> a, View view, int position, long id) {
-				}
-			});
+			t.apartments.requery();
+			t.notifyDataSetChanged();
 		}
 
 	}
@@ -127,11 +175,10 @@ public class Result extends Activity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 		resultModel.setApartmentIdFromPref();
-		if (t != null) {
-			result_list.setSelectionFromTop(resultModel.getIndexM(), resultModel.getTopM());
-			t.notifyDataSetChanged();
-			moveScrollLV();
-		}
+		result_list.setSelectionFromTop(resultModel.getIndexM(), resultModel.getTopM());
+		t.apartments.requery();
+		t.notifyDataSetChanged();
+		moveScrollLV();
 	}
 
 	public void getSetCoordinateLV() {
@@ -162,8 +209,6 @@ public class Result extends Activity implements OnClickListener {
 				dialog.dismiss();
 			}
 		});
-
-
 		imageDialog.create();
 		imageDialog.show();
 	}
