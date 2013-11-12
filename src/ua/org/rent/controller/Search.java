@@ -104,6 +104,7 @@ public class Search extends Activity {
 
 
 		ta = (TabActivity) Search.this.getParent();
+		
 
 	}
 

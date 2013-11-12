@@ -80,7 +80,7 @@ public class Result extends Activity implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> a, View view, int position, long id) {
 				Intent intent = new Intent(Result.this, Detail.class);
-				//intent.putExtra(SearchData.class.getCanonicalName(), resultModel.getSearchData());
+				intent.putExtra(SearchData.class.getCanonicalName(), resultModel.getSearchData());
 				startActivity(intent);
 			}
 		});
@@ -211,5 +211,8 @@ public class Result extends Activity implements OnClickListener {
 		});
 		imageDialog.create();
 		imageDialog.show();
+	}
+
+	public void retry() {
 	}
 }

@@ -11,7 +11,7 @@ import android.os.Parcelable;
  *
  * @author petroff
  */
-public class Feature {
+public class Feature implements Parcelable{
 
 	private String title;
 	private int _id;
@@ -48,6 +48,7 @@ public class Feature {
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeString(title);
 		out.writeInt(_id);
+		out.writeString(ico);
 	}
 	public static final Parcelable.Creator<Feature> CREATOR = new Parcelable.Creator<Feature>() {
 		public Feature createFromParcel(Parcel in) {
@@ -62,6 +63,7 @@ public class Feature {
 	private Feature(Parcel in) {
 		title = in.readString();
 		_id = in.readInt();
+		ico = in.readString();
 	}
 
 	public Feature(String title, Integer id) {

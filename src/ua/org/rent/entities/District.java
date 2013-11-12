@@ -12,7 +12,7 @@ import android.util.Log;
  *
  * @author petroff
  */
-public class District {
+public class District implements Parcelable{
 
 	private String title;
 	private int _id;
