@@ -11,3 +11,4 @@ gen/
 local.properties
 .classpath
 
+/tests/bin/
