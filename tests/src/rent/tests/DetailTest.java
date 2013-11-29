@@ -3,18 +3,22 @@ package rent.tests;
 
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.TouchUtils;
+import android.widget.Button;
 import android.widget.EditText;
-import ua.org.rent.controller.Detail;
+import static junit.framework.Assert.assertNotNull;
+import ua.org.rent.controller.Tab;
+import ua.org.rent.R;
 
 public class DetailTest extends
-		ActivityInstrumentationTestCase2<Detail> {
+		ActivityInstrumentationTestCase2<Tab> {
 
 	private EditText editKmPerHour;
 	private EditText editMeterPerSec;
-	private Detail activity;
+	private Tab activity;
 
 	public DetailTest() {
-		super("ua.org.rent.controller", Detail.class);
+		super("ua.org.rent.controller", Tab.class);
 	}
 
 	@Override
@@ -27,6 +31,9 @@ public class DetailTest extends
 
 	public void testControlsCreated() {
 		assertNotNull(activity);
+//		Button searchButton = (Button) activity.findViewById(R.id.btSearch);
+//		assertNotNull(searchButton);
+//		//TouchUtils.clickView(this, searchButton);
 	}
 
 }

@@ -146,6 +146,7 @@
 			android:text="" />
 	
 		<Button
+			android:id="@+id/btSearch"
 			android:layout_marginTop="@dimen/distance_elements_search"
 			android:layout_gravity="center"
 			android:layout_width="wrap_content"
