@@ -31,9 +31,9 @@ public class DetailRobotiumTest extends ActivityInstrumentationTestCase2<Tab> {
 	}
 
 	public void testCheckDetail() throws Exception {
-		Button btF = (Button)solo.getView(ua.org.rent.R.id.btSearch);
-		assertNotNull(btF);
-		solo.clickOnView(btF);
+//		Button btF = (Button)solo.getView(ua.org.rent.R.id.btSearch);
+//		assertNotNull(btF);
+//		solo.clickOnView(btF);
 		Button btD = (Button)solo.getView(ua.org.rent.R.id.btD);
 		assertNotNull(btD);
 		solo.clickOnView(btD);
@@ -41,7 +41,7 @@ public class DetailRobotiumTest extends ActivityInstrumentationTestCase2<Tab> {
 		solo.clickOnText("Рио");
 		
 		solo.waitForActivity("Result", 100);
-		solo.assertCurrentActivity("Result", Result.class);
+//		solo.assertCurrentActivity("Result", Result.class);
 	}
 
 	@Override
